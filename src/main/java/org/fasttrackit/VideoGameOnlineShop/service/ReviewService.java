@@ -1,10 +1,14 @@
 package org.fasttrackit.VideoGameOnlineShop.service;
 
+import org.fasttrackit.VideoGameOnlineShop.domain.Product;
 import org.fasttrackit.VideoGameOnlineShop.domain.Review;
+import org.fasttrackit.VideoGameOnlineShop.exception.ResourceNotFoundException;
 import org.fasttrackit.VideoGameOnlineShop.persistance.ReviewRepository;
 import org.fasttrackit.VideoGameOnlineShop.transfer.review.ReviewResponse;
+import org.fasttrackit.VideoGameOnlineShop.transfer.review.SaveReviewRequest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -12,49 +16,96 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 
 @Service
 public class ReviewService {
-    private static final Logger LOGGER= LoggerFactory.getLogger(ReviewService.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(ReviewService.class);
 
     private final ReviewRepository reviewRepository;
+    private final ProductService productService;
+
     @Autowired
-    public ReviewService(ReviewRepository reviewRepository) {
+    public ReviewService(ReviewRepository reviewRepository, ProductService productService) {
         this.reviewRepository = reviewRepository;
+        this.productService = productService;
     }
-@Transactional
-    public Page<ReviewResponse> getReviews(long productId, Pageable pageable){
-        LOGGER.info("Retrieving reviews for product {}",productId);
+
+    @Transactional
+    public Page<ReviewResponse> getReviews(long productId, Pageable pageable) {
+        LOGGER.info("Retrieving reviews for product {}", productId);
         Page<Review> reviewsPage = reviewRepository.findByProductId(productId, pageable);
 
-        List<ReviewResponse> reviewDtos=new ArrayList<>();
-        for(Review review:reviewsPage.getContent()){
-            ReviewResponse dto=new ReviewResponse();
+        List<ReviewResponse> reviewDtos = new ArrayList<>();
+        for (Review review : reviewsPage.getContent()) {
+            ReviewResponse dto = new ReviewResponse();
             dto.setId(review.getId());
             dto.setContent(review.getContent());
+            dto.setRating(review.getRating());
             reviewDtos.add(dto);
         }
-
-        return new PageImpl<>(reviewDtos,pageable,reviewsPage.getTotalElements());
+        return new PageImpl<>(reviewDtos, pageable, reviewsPage.getTotalElements());
     }
-//        public void addProductsToCart(AddProductsToCartRequest request) {
-//        LOGGER.info("Adding products to cart: {}", request);
-//        Cart cart = cartRepository.findById(request.getCustomerId()).orElse(new Cart());
-//        if (cart.getCustomer() == null) {
-//            Customer customer = customerService.getCustomer(request.getCustomerId());
-//            cart.setCustomer(customer);
-//        }
-//        for(Long id: request.getProductsIds())
-//        {
-//            Product product = productService.getProduct(id);
-//            cart.addProductToCart(product);
-//        }
-//        cartRepository.save(cart);
-//    }
+
+    private ReviewResponse mapReviewResponse(Review review) {
+        ReviewResponse reviewDto = new ReviewResponse();
+        reviewDto.setId(review.getId());
+        reviewDto.setContent(review.getContent());
+        reviewDto.setRating(review.getRating());
+        return reviewDto;
+    }
+   public ReviewResponse createReview(long id,SaveReviewRequest request) {
+       LOGGER.info("Creating Review {}", request);
+      Review review=new Review();
+       review.setContent(request.getContent());
+       review.setRating(request.getRating());
+       review.setProduct(productService.findProduct(id));
+       Review savedReview = reviewRepository.save(review);
+       return mapReviewResponse(savedReview);
+    }
+
+    @Transactional
+    public void addReviewToProduct(long productId,SaveReviewRequest request) {
+        LOGGER.info("Adding review to product: {}", productId);
+        Review review = reviewRepository.findById(productId).orElse(new Review());
+        if (review.getProduct() == null) {
+            Product product = productService.findProduct(productId);
+            review.setProduct(product);
+        }
+        review.setRating(request.getRating());
+        review.setContent(request.getContent());
+        reviewRepository.save(review);
+    }
+
+    @Transactional
+    public void deleteReview(long id) {
+        LOGGER.info("Deleting review {}", id);
+        reviewRepository.deleteById(id);
+    }
+
+    @Transactional
+    public ReviewResponse updateReview(long id, SaveReviewRequest request) {
+        LOGGER.info("Updating product {}: {}", id, request);
+        Review review = reviewRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Review " + id + " not found"));
+        if(!request.getContent().equals("")) {
+            if (!request.getContent().equals(review.getContent()) && request.getRating() != review.getRating())
+                BeanUtils.copyProperties(request, review);
+            else if (!request.getContent().equals(review.getContent()) && request.getRating() == review.getRating())
+                review.setContent(request.getContent());
+            else if (request.getContent().equals(review.getContent()) && request.getRating() != review.getRating())
+                review.setRating(request.getRating());
+            else
+                LOGGER.info("Can't update with the same proprieties");
+        }
+        else
+            if( request.getRating() != review.getRating())
+                review.setRating(request.getRating());
+            Review savedReview = reviewRepository.save(review);
+            return mapReviewResponse(savedReview);
+    }
+}
+
+
 //    de facut add review to product
 
-
-}
