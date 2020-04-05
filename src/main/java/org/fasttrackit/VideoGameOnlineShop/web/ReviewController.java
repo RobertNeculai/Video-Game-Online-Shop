@@ -24,12 +24,6 @@ import javax.validation.Valid;
         public ReviewController(ReviewService reviewService) {
             this.reviewService = reviewService;
         }
-        //Post means create... we're doing createOrUpdate => PUT
-//        @PostMapping
-//        public ResponseEntity<ReviewResponse> createReview(@Valid @RequestBody SaveReviewRequest request) {
-//          ReviewResponse reviewResponse= reviewService.createReview(request);
-//            return new ResponseEntity<>(reviewResponse, HttpStatus.CREATED);
-//        }
         @PostMapping("/{id}")
         public ResponseEntity<Void> addReviewToProduct(@PathVariable long id,@Valid @RequestBody SaveReviewRequest request){
             reviewService.addReviewToProduct(id,request);

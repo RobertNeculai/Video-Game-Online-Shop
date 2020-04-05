@@ -41,23 +41,23 @@ public class CartService {
             Customer customer = customerService.getCustomer(request.getCustomerId());
             cart.setCustomer(customer);
         }
-        for(Long id: request.getProductsIds())
-        {
+        for (Long id : request.getProductsIds()) {
             Product product = productService.findProduct(id);
             cart.addProductToCart(product);
         }
         cartRepository.save(cart);
     }
+
     @Transactional
     //returning DTO to avoid lazy loading exceptions
-    public CartResponse getCart(long customerId){
-        LOGGER.info("Retrieving cart items for customer {}",customerId);
+    public CartResponse getCart(long customerId) {
+        LOGGER.info("Retrieving cart items for customer {}", customerId);
         Cart cart = cartRepository.findById(customerId).orElseThrow(() -> new ResourceNotFoundException("Cart " + customerId + " does not exist"));
 
 
-        CartResponse cartResponse=new CartResponse();
+        CartResponse cartResponse = new CartResponse();
         cartResponse.setId(cart.getId());
-        Set<ProductInCartResponse> productDtos=new HashSet<>();
+        Set<ProductInCartResponse> productDtos = new HashSet<>();
         for (Product nextProduct : cart.getProducts()) {
             ProductInCartResponse productDto = new ProductInCartResponse();
             productDto.setId(nextProduct.getId());
@@ -68,6 +68,21 @@ public class CartService {
         cartResponse.setProducts(productDtos);
         return cartResponse;
     }
+
+    @Transactional
+    public void removeProductsFromCart(AddProductsToCartRequest request) {
+        LOGGER.info("Removing products from cart: {}", request);
+        Cart cart = cartRepository.findById(request.getCustomerId()).orElseThrow(() -> new ResourceNotFoundException("Cart " + request.getCustomerId() + " does not exist"));
+        for (Long id : request.getProductsIds()) {
+            Product product = productService.findProduct(id);
+            cart.deleteProductFromCart(product);
+        }
+        cartRepository.save(cart);
+    }
+//    public CartResponse updateCart(long customerId){
+//        Cart cart = cartRepository.findById(customerId).orElseThrow(() -> new ResourceNotFoundException("Cart " + customerId + " does not exist"));
+
+//    }
 
 
 }
