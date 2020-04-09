@@ -1,6 +1,7 @@
 package org.fasttrackit.VideoGameOnlineShop.service;
 
 import org.fasttrackit.VideoGameOnlineShop.domain.Cart;
+import org.fasttrackit.VideoGameOnlineShop.domain.CartProducts;
 import org.fasttrackit.VideoGameOnlineShop.domain.Customer;
 import org.fasttrackit.VideoGameOnlineShop.domain.Product;
 import org.fasttrackit.VideoGameOnlineShop.exception.ResourceNotFoundException;
@@ -58,11 +59,11 @@ public class CartService {
         CartResponse cartResponse = new CartResponse();
         cartResponse.setId(cart.getId());
         Set<ProductInCartResponse> productDtos = new HashSet<>();
-        for (Product nextProduct : cart.getProducts()) {
+        for (CartProducts nextProduct : cart.getProducts()) {
             ProductInCartResponse productDto = new ProductInCartResponse();
-            productDto.setId(nextProduct.getId());
-            productDto.setName(nextProduct.getName());
-            productDto.setPrice(nextProduct.getPrice());
+            productDto.setId(nextProduct.getProduct().getId());
+            productDto.setName(nextProduct.getProduct().getName());
+            productDto.setPrice(nextProduct.getProduct().getPrice());
             productDtos.add(productDto);
         }
         cartResponse.setProducts(productDtos);

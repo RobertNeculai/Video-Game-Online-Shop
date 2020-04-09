@@ -2,6 +2,7 @@ package org.fasttrackit.VideoGameOnlineShop.domain;
 
 import javax.persistence.*;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.Set;
 
 @Entity
@@ -13,23 +14,29 @@ public class Cart {
     @MapsId
     private Customer customer;
 
-    @ManyToMany(cascade = CascadeType.MERGE)
-    // by default Lazy
-    @JoinTable(name = "Cart_Product",joinColumns = @JoinColumn(name = "cart_id"),inverseJoinColumns = @JoinColumn(name = "product_id"))
-    private Set<Product> products=new HashSet<>();
+    @OneToMany(mappedBy = "cart",cascade = CascadeType.ALL)
+    private Set<CartProducts> products=new HashSet<>();
 
 
     public void addProductToCart(Product product){
-        // adding recieved product to current cart
-        products.add(product);
-        // adding current cart to the recieved product's carts set
-        product.getCarts().add(this);
+
+        CartProducts cartProducts=new CartProducts(this,product);
+        products.add(cartProducts);
     }
 
     public void deleteProductFromCart(Product product){
-        products.remove(product);
-        product.getCarts().remove(this);
-    }
+            for (Iterator<CartProducts> iterator = products.iterator();
+                 iterator.hasNext(); ) {
+                CartProducts cartProducts = iterator.next();
+
+                if (cartProducts.getCart().equals(this) &&
+                        cartProducts.getProduct().equals(product)) {
+                    iterator.remove();
+                    cartProducts.setCart(null);
+                    cartProducts.setProduct(null);
+                }
+            }
+        }
     public long getId() {
         return id;
     }
@@ -46,11 +53,11 @@ public class Cart {
         this.customer = customer;
     }
 
-    public Set<Product> getProducts() {
+    public Set<CartProducts> getProducts() {
         return products;
     }
 
-    public void setProducts(Set<Product> products) {
+    public void setProducts(Set<CartProducts> products) {
         this.products = products;
     }
 

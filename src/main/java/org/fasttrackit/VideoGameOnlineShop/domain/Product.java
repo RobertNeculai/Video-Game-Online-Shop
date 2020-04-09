@@ -42,17 +42,6 @@ public class Product {
         this.genre = genre;
     }
 
-    @ManyToMany(mappedBy = "products")
-    private Set<Cart> carts=new HashSet<>();
-    // nu includem fetch.type=lazy in .toString
-
-    public Set<Cart> getCarts() {
-        return carts;
-    }
-
-    public void setCarts(Set<Cart> carts) {
-        this.carts = carts;
-    }
     public long getId() {
         return id;
     }
