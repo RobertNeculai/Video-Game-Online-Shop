@@ -19,10 +19,22 @@ public class Cart {
 
 
     public void addProductToCart(Product product){
+            boolean productNotPresent = true;
 
-        CartProducts cartProducts=new CartProducts(this,product);
-        products.add(cartProducts);
-    }
+            for (CartProducts cartProducts : products) {
+                if (cartProducts.getCart().equals(this) && cartProducts.getProduct().equals(product)) {
+                    cartProducts.setQuantity(cartProducts.getQuantity() + 1);
+                    productNotPresent = false;
+                    break;
+                }
+            }
+
+            if (productNotPresent) {
+                CartProducts cartProducts = new CartProducts(this, product);
+                cartProducts.setQuantity(1);
+                products.add(cartProducts);
+            }
+        }
 
     public void deleteProductFromCart(Product product){
             for (Iterator<CartProducts> iterator = products.iterator();
