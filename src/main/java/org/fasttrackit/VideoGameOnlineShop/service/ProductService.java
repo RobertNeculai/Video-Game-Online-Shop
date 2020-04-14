@@ -22,10 +22,8 @@ import java.util.List;
 public class ProductService {
     private static final Logger LOGGER = LoggerFactory.getLogger(ProductService.class);
 
-    // inversion of control ( IoC)
     private final ProductRepository productRepository;
 
-    // dependancy injection  (from IoC container)
     @Autowired
     public ProductService(ProductRepository productRepository) {
         this.productRepository = productRepository;
@@ -51,15 +49,7 @@ public class ProductService {
         Product product = findProduct(id);
 
         return mapProductResponse(product);
-        // Lambda expressions
 
-        // optional usage explained
-        //Optional<Product> productOptional = productRepository.findById(id);
-        //if(productOptional.isPresent())
-        //    return productOptional.get();
-        //else
-        //    throw new ResourceNotFoundException("Product "+id+" not found");
-        //}
     }
 
     public Product findProduct(long id) {

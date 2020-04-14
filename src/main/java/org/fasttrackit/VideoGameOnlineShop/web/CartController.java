@@ -22,7 +22,6 @@ public class CartController {
     public CartController(CartService cartService) {
         this.cartService = cartService;
     }
-    //Post means create... we're doing createOrUpdate => PUT
     @PutMapping
     public ResponseEntity<Void> addProductToCart(@Valid@RequestBody AddProductsToCartRequest request){
         cartService.addProductsToCart(request);

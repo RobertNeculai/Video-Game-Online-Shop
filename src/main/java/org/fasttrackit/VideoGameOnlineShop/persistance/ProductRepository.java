@@ -14,11 +14,4 @@ public interface ProductRepository extends JpaRepository <Product,Long> {
     Page<Product>findByDiscount(boolean discount,Pageable pageable);
 
 
-    //JPQL syntax
-//    @Query("SELECT product FROM Product product WHERE name LIKE '%:partialName%'")
-
-    // or Using native queries
-    @Query(value="SELECT * FROM product WHERE `name` LIKE '%?0'",nativeQuery = true)
-    Page<Product>findByPartialName(String partialName, Pageable pageable);
-
 }

@@ -16,11 +16,9 @@ import org.springframework.stereotype.Service;
 public class CustomerService {
     private static final Logger LOGGER = LoggerFactory.getLogger(org.fasttrackit.VideoGameOnlineShop.service.CustomerService.class);
 
-    // inversion of control ( IoC)
     private final CustomerRepository customerRepository;
     private final ObjectMapper objectMapper;
 
-    // dependancy injection  (from IoC container)
     @Autowired
     public CustomerService(CustomerRepository customerRepository, ObjectMapper objectMapper) {
         this.customerRepository = customerRepository;

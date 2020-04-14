@@ -12,12 +12,9 @@ import org.fasttrackit.VideoGameOnlineShop.transfer.cart.ProductInCartResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
-
 import javax.transaction.Transactional;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.Set;
 
 @Service
@@ -50,7 +47,6 @@ public class CartService {
     }
 
     @Transactional
-    //returning DTO to avoid lazy loading exceptions
     public CartResponse getCart(long customerId) {
         LOGGER.info("Retrieving cart items for customer {}", customerId);
         Cart cart = cartRepository.findById(customerId).orElseThrow(() -> new ResourceNotFoundException("Cart " + customerId + " does not exist"));
@@ -80,10 +76,4 @@ public class CartService {
         }
         cartRepository.save(cart);
     }
-//    public CartResponse updateCart(long customerId){
-//        Cart cart = cartRepository.findById(customerId).orElseThrow(() -> new ResourceNotFoundException("Cart " + customerId + " does not exist"));
-
-//    }
-
-
 }
