@@ -113,6 +113,6 @@ public class Product {
 
     @Override
     public int hashCode() {
-        return (int) (id^(id>>>32));
+        return (int) (id ^ (id >>> 32));
     }
 }

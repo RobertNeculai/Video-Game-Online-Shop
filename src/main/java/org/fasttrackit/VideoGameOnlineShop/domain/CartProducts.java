@@ -17,16 +17,16 @@ public class CartProducts {
     @MapsId("productId")
     private Product product;
 
-    @Column(name="quantity")
+    @Column(name = "quantity")
     private int quantity;
 
     public CartProducts() {
     }
 
     public CartProducts(Cart cart, Product product) {
-        this.cart=cart;
-        this.product=product;
-        this.id=new CartProductsId(cart.getId(),product.getId());
+        this.cart = cart;
+        this.product = product;
+        this.id = new CartProductsId(cart.getId(), product.getId());
 
     }
 
@@ -53,6 +53,7 @@ public class CartProducts {
     public void setProduct(Product product) {
         this.product = product;
     }
+
     public int getQuantity() {
         return quantity;
     }

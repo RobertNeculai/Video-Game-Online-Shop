@@ -21,15 +21,16 @@ public class CustomerController {
     public CustomerController(CustomerService customerService) {
         this.customerService = customerService;
     }
+
     @PostMapping
-    public ResponseEntity<Customer> createCustomer(@Valid @RequestBody SaveCustomerRequest request){
+    public ResponseEntity<Customer> createCustomer(@Valid @RequestBody SaveCustomerRequest request) {
         Customer customer = customerService.createCustomer(request);
         return new ResponseEntity<>(customer, HttpStatus.CREATED);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Customer> getCustomer(@PathVariable long id){
-        Customer customer=customerService.getCustomer(id);
-        return new ResponseEntity<>(customer,HttpStatus.OK);
+    public ResponseEntity<Customer> getCustomer(@PathVariable long id) {
+        Customer customer = customerService.getCustomer(id);
+        return new ResponseEntity<>(customer, HttpStatus.OK);
     }
 }

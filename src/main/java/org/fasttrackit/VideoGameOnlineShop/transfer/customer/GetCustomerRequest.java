@@ -4,8 +4,8 @@ import java.util.StringJoiner;
 
 public class GetCustomerRequest {
 
-    private String partialFirstName ;
-    private String partialLastName ;
+    private String partialFirstName;
+    private String partialLastName;
 
     public String getPartialFirstName() {
         return partialFirstName;

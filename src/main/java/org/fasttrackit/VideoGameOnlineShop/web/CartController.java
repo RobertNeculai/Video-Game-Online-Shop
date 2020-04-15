@@ -22,18 +22,21 @@ public class CartController {
     public CartController(CartService cartService) {
         this.cartService = cartService;
     }
+
     @PutMapping
-    public ResponseEntity<Void> addProductToCart(@Valid@RequestBody AddProductsToCartRequest request){
+    public ResponseEntity<Void> addProductToCart(@Valid @RequestBody AddProductsToCartRequest request) {
         cartService.addProductsToCart(request);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
+
     @GetMapping("/{id}")
-    public ResponseEntity<CartResponse> getCart(@PathVariable("id") long customerId){
+    public ResponseEntity<CartResponse> getCart(@PathVariable("id") long customerId) {
         CartResponse cart = cartService.getCart(customerId);
-        return new ResponseEntity<>(cart,HttpStatus.OK);
+        return new ResponseEntity<>(cart, HttpStatus.OK);
     }
+
     @DeleteMapping
-    public ResponseEntity<Void> deleteProductFromCart(@Valid@RequestBody AddProductsToCartRequest request){
+    public ResponseEntity<Void> deleteProductFromCart(@Valid @RequestBody AddProductsToCartRequest request) {
         cartService.removeProductsFromCart(request);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }

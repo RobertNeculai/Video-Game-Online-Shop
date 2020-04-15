@@ -14,41 +14,42 @@ public class Cart {
     @MapsId
     private Customer customer;
 
-    @OneToMany(mappedBy = "cart",cascade = CascadeType.ALL)
-    private Set<CartProducts> products=new HashSet<>();
+    @OneToMany(mappedBy = "cart", cascade = CascadeType.ALL)
+    private Set<CartProducts> products = new HashSet<>();
 
 
-    public void addProductToCart(Product product){
-            boolean productNotPresent = true;
+    public void addProductToCart(Product product) {
+        boolean productNotPresent = true;
 
-            for (CartProducts cartProducts : products) {
-                if (cartProducts.getCart().equals(this) && cartProducts.getProduct().equals(product)) {
-                    cartProducts.setQuantity(cartProducts.getQuantity() + 1);
-                    productNotPresent = false;
-                    break;
-                }
-            }
-
-            if (productNotPresent) {
-                CartProducts cartProducts = new CartProducts(this, product);
-                cartProducts.setQuantity(1);
-                products.add(cartProducts);
+        for (CartProducts cartProducts : products) {
+            if (cartProducts.getCart().equals(this) && cartProducts.getProduct().equals(product)) {
+                cartProducts.setQuantity(cartProducts.getQuantity() + 1);
+                productNotPresent = false;
+                break;
             }
         }
 
-    public void deleteProductFromCart(Product product){
-            for (Iterator<CartProducts> iterator = products.iterator();
-                 iterator.hasNext(); ) {
-                CartProducts cartProducts = iterator.next();
+        if (productNotPresent) {
+            CartProducts cartProducts = new CartProducts(this, product);
+            cartProducts.setQuantity(1);
+            products.add(cartProducts);
+        }
+    }
 
-                if (cartProducts.getCart().equals(this) &&
-                        cartProducts.getProduct().equals(product)) {
-                    iterator.remove();
-                    cartProducts.setCart(null);
-                    cartProducts.setProduct(null);
-                }
+    public void deleteProductFromCart(Product product) {
+        for (Iterator<CartProducts> iterator = products.iterator();
+             iterator.hasNext(); ) {
+            CartProducts cartProducts = iterator.next();
+
+            if (cartProducts.getCart().equals(this) &&
+                    cartProducts.getProduct().equals(product)) {
+                iterator.remove();
+                cartProducts.setCart(null);
+                cartProducts.setProduct(null);
             }
         }
+    }
+
     public long getId() {
         return id;
     }

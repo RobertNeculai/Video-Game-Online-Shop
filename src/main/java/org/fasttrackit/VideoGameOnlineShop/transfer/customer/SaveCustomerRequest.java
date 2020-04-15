@@ -4,10 +4,10 @@ import javax.validation.constraints.NotNull;
 import java.util.StringJoiner;
 
 public class SaveCustomerRequest {
-        @NotNull
-        private String firstName;
-        @NotNull
-        private String lastName;
+    @NotNull
+    private String firstName;
+    @NotNull
+    private String lastName;
 
     @Override
     public String toString() {

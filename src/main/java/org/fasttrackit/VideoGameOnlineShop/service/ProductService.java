@@ -57,7 +57,7 @@ public class ProductService {
     }
 
     private ProductResponse mapProductResponse(Product product) {
-        ProductResponse productDto=new ProductResponse();
+        ProductResponse productDto = new ProductResponse();
         productDto.setId(product.getId());
         productDto.setName(product.getName());
         productDto.setPrice(product.getPrice());
@@ -69,44 +69,43 @@ public class ProductService {
         return productDto;
     }
 
-    public Page<ProductResponse> getProducts(GetProductsRequest request, Pageable pageable){
-        LOGGER.info("Retreving products that match the filter {}",request);
+    public Page<ProductResponse> getProducts(GetProductsRequest request, Pageable pageable) {
+        LOGGER.info("Retreving products that match the filter {}", request);
         Page<Product> productsPage;
-        if(request!=null)
-        {
-            if(request.getMinQuantity()!=null && request.getPartialName()!=null)
-                productsPage= productRepository.findByNameContainingAndQuantityGreaterThanEqual(request.getPartialName(),request.getMinQuantity(),pageable);
-            else if(request.getPartialName()!=null)
-                productsPage= productRepository.findByNameContaining(request.getPartialName(),pageable);
-            else if(request.getGenre()!=null)
-                productsPage=productRepository.findByGenreContaining(request.getGenre(),pageable);
-            else if(request.isDiscount())
-                productsPage=productRepository.findByDiscount(request.isDiscount(),pageable);
+        if (request != null) {
+            if (request.getMinQuantity() != null && request.getPartialName() != null)
+                productsPage = productRepository.findByNameContainingAndQuantityGreaterThanEqual(request.getPartialName(), request.getMinQuantity(), pageable);
+            else if (request.getPartialName() != null)
+                productsPage = productRepository.findByNameContaining(request.getPartialName(), pageable);
+            else if (request.getGenre() != null)
+                productsPage = productRepository.findByGenreContaining(request.getGenre(), pageable);
+            else if (request.isDiscount())
+                productsPage = productRepository.findByDiscount(request.isDiscount(), pageable);
             else
-                productsPage=productRepository.findAll(pageable);
-        }
-        else {
+                productsPage = productRepository.findAll(pageable);
+        } else {
 
             productsPage = productRepository.findAll(pageable);
         }
-        List<ProductResponse> productDtos=new ArrayList<>();
-        for(Product product:productsPage.getContent())
-        {
+        List<ProductResponse> productDtos = new ArrayList<>();
+        for (Product product : productsPage.getContent()) {
             ProductResponse productDto = mapProductResponse(product);
             productDtos.add(productDto);
         }
-        return new PageImpl<>(productDtos,pageable,productsPage.getTotalElements());
+        return new PageImpl<>(productDtos, pageable, productsPage.getTotalElements());
     }
+    // public Page<ProductResponse> getTopRatedProducts()
 
-    public ProductResponse updateProduct(long id,SaveProductRequest request){
-        LOGGER.info("Updating product {}: {}",id,request);
-        Product product=findProduct(id);
-        BeanUtils.copyProperties(request,product);
+    public ProductResponse updateProduct(long id, SaveProductRequest request) {
+        LOGGER.info("Updating product {}: {}", id, request);
+        Product product = findProduct(id);
+        BeanUtils.copyProperties(request, product);
         Product savedProduct = productRepository.save(product);
         return mapProductResponse(savedProduct);
     }
-    public void deleteProduct(long id){
-        LOGGER.info("Deleting product {}",id);
+
+    public void deleteProduct(long id) {
+        LOGGER.info("Deleting product {}", id);
         productRepository.deleteById(id);
     }
 }

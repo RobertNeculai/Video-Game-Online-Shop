@@ -9,21 +9,21 @@ import java.util.Objects;
 public class CartProductsId implements Serializable {
 
 
+    @Column(name = "cart_id")
+    private Long cartId;
 
-        @Column(name = "cart_id")
-        private Long cartId;
+    @Column(name = "product_id")
+    private Long productId;
 
-        @Column(name = "product_id")
-        private Long productId;
+    public CartProductsId() {
+    }
 
-        private CartProductsId() {}
-
-        public CartProductsId(
-                Long cartId,
-                Long productId) {
-            this.cartId = cartId;
-            this.productId = productId;
-        }
+    public CartProductsId(
+            Long cartId,
+            Long productId) {
+        this.cartId = cartId;
+        this.productId = productId;
+    }
 
     public Long getCartId() {
         return cartId;

@@ -27,7 +27,7 @@ public class CustomerService {
 
     public Customer createCustomer(SaveCustomerRequest request) {
         LOGGER.info("Creating Customer {}", request);
-        Customer customer = objectMapper.convertValue(request,Customer.class);
+        Customer customer = objectMapper.convertValue(request, Customer.class);
         return customerRepository.save(customer);
     }
 

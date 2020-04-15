@@ -12,7 +12,7 @@ public class ReviewResponse {
     }
 
     public void setRating(int rating) {
-            this.rating = rating;
+        this.rating = rating;
     }
 
     @Override

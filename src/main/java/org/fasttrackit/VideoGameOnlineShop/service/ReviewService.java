@@ -55,18 +55,19 @@ public class ReviewService {
         reviewDto.setRating(review.getRating());
         return reviewDto;
     }
-   public ReviewResponse createReview(long id,SaveReviewRequest request) {
-       LOGGER.info("Creating Review {}", request);
-      Review review=new Review();
-       review.setContent(request.getContent());
-       review.setRating(request.getRating());
-       review.setProduct(productService.findProduct(id));
-       Review savedReview = reviewRepository.save(review);
-       return mapReviewResponse(savedReview);
+
+    public ReviewResponse createReview(long id, SaveReviewRequest request) {
+        LOGGER.info("Creating Review {}", request);
+        Review review = new Review();
+        review.setContent(request.getContent());
+        review.setRating(request.getRating());
+        review.setProduct(productService.findProduct(id));
+        Review savedReview = reviewRepository.save(review);
+        return mapReviewResponse(savedReview);
     }
 
     @Transactional
-    public void addReviewToProduct(long productId,SaveReviewRequest request) {
+    public void addReviewToProduct(long productId, SaveReviewRequest request) {
         LOGGER.info("Adding review to product: {}", productId);
         Review review = reviewRepository.findById(productId).orElse(new Review());
         if (review.getProduct() == null) {
@@ -88,7 +89,7 @@ public class ReviewService {
     public ReviewResponse updateReview(long id, SaveReviewRequest request) {
         LOGGER.info("Updating product {}: {}", id, request);
         Review review = reviewRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Review " + id + " not found"));
-        if(!request.getContent().equals("")) {
+        if (!request.getContent().equals("")) {
             if (!request.getContent().equals(review.getContent()) && request.getRating() != review.getRating())
                 BeanUtils.copyProperties(request, review);
             else if (!request.getContent().equals(review.getContent()) && request.getRating() == review.getRating())
@@ -97,12 +98,10 @@ public class ReviewService {
                 review.setRating(request.getRating());
             else
                 LOGGER.info("Can't update with the same proprieties");
-        }
-        else
-            if( request.getRating() != review.getRating())
-                review.setRating(request.getRating());
-            Review savedReview = reviewRepository.save(review);
-            return mapReviewResponse(savedReview);
+        } else if (request.getRating() != review.getRating())
+            review.setRating(request.getRating());
+        Review savedReview = reviewRepository.save(review);
+        return mapReviewResponse(savedReview);
     }
 }
 

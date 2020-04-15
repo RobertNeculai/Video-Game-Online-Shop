@@ -26,32 +26,32 @@ public class ProductController {
     }
 
     @PostMapping
-    public ResponseEntity<ProductResponse> createProduct(@Valid @RequestBody SaveProductRequest request){
+    public ResponseEntity<ProductResponse> createProduct(@Valid @RequestBody SaveProductRequest request) {
         ProductResponse product = productService.createProduct(request);
         return new ResponseEntity<>(product, HttpStatus.CREATED);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<ProductResponse> getProduct(@PathVariable long id){
+    public ResponseEntity<ProductResponse> getProduct(@PathVariable long id) {
         ProductResponse product = productService.getProduct(id);
-        return new ResponseEntity<>(product,HttpStatus.OK);
+        return new ResponseEntity<>(product, HttpStatus.OK);
     }
 
     @GetMapping
-    public ResponseEntity<Page<ProductResponse>> getProducts(GetProductsRequest request, Pageable pageable){
+    public ResponseEntity<Page<ProductResponse>> getProducts(GetProductsRequest request, Pageable pageable) {
 
         Page<ProductResponse> products = productService.getProducts(request, pageable);
-        return new ResponseEntity<>(products,HttpStatus.OK);
+        return new ResponseEntity<>(products, HttpStatus.OK);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<ProductResponse> updateProduct(@PathVariable long id,@Valid @RequestBody SaveProductRequest request){
+    public ResponseEntity<ProductResponse> updateProduct(@PathVariable long id, @Valid @RequestBody SaveProductRequest request) {
         ProductResponse product = productService.updateProduct(id, request);
-        return new ResponseEntity<>(product,HttpStatus.OK);
+        return new ResponseEntity<>(product, HttpStatus.OK);
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteProduct(@PathVariable long id){
+    public ResponseEntity<Void> deleteProduct(@PathVariable long id) {
         productService.deleteProduct(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
