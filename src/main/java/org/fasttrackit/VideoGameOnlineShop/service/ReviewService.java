@@ -56,27 +56,31 @@ public class ReviewService {
         return reviewDto;
     }
 
-    public ReviewResponse createReview(long id, SaveReviewRequest request) {
-        LOGGER.info("Creating Review {}", request);
-        Review review = new Review();
-        review.setContent(request.getContent());
-        review.setRating(request.getRating());
-        review.setProduct(productService.findProduct(id));
-        Review savedReview = reviewRepository.save(review);
-        return mapReviewResponse(savedReview);
-    }
-
     @Transactional
     public void addReviewToProduct(long productId, SaveReviewRequest request) {
         LOGGER.info("Adding review to product: {}", productId);
         Review review = reviewRepository.findById(productId).orElse(new Review());
+
         if (review.getProduct() == null) {
             Product product = productService.findProduct(productId);
+
             review.setProduct(product);
         }
         review.setRating(request.getRating());
         review.setContent(request.getContent());
         reviewRepository.save(review);
+        Product product = productService.findProduct(productId);
+        product.setTotalRating(product.getTotalRating() + review.getRating());
+
+        product.setAverageRating(refreshRating(productId));
+    }
+
+    private double refreshRating(long id) {
+        Product product = productService.findProduct(id);
+        int a = reviewRepository.findAllByProductId(id).size();
+        double b = product.getTotalRating();
+        return b / a;
+
     }
 
     @Transactional
@@ -85,6 +89,7 @@ public class ReviewService {
         reviewRepository.deleteById(id);
     }
 
+    // Update method checks Review Content, and updates only the newly modified proprieties
     @Transactional
     public ReviewResponse updateReview(long id, SaveReviewRequest request) {
         LOGGER.info("Updating product {}: {}", id, request);

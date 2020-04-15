@@ -15,7 +15,7 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
 
     Page<Product> findByDiscount(boolean discount, Pageable pageable);
 
-    Page<Product> findByRating(long rating, Pageable pageable);
+    Page<Product> findByAverageRatingGreaterThanEqual(double rating, Pageable pageable);
 
 
 }

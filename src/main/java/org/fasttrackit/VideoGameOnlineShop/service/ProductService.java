@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -66,6 +67,7 @@ public class ProductService {
         productDto.setQuantity(product.getQuantity());
         productDto.setGenre(product.getGenre());
         productDto.setDiscount(product.isDiscount());
+        productDto.setAverageRating(product.getAverageRating());
         return productDto;
     }
 
@@ -81,6 +83,8 @@ public class ProductService {
                 productsPage = productRepository.findByGenreContaining(request.getGenre(), pageable);
             else if (request.isDiscount())
                 productsPage = productRepository.findByDiscount(request.isDiscount(), pageable);
+            else if (request.getRating() != null)
+                productsPage = productRepository.findByAverageRatingGreaterThanEqual(request.getRating(), pageable);
             else
                 productsPage = productRepository.findAll(pageable);
         } else {
@@ -94,7 +98,6 @@ public class ProductService {
         }
         return new PageImpl<>(productDtos, pageable, productsPage.getTotalElements());
     }
-    // public Page<ProductResponse> getTopRatedProducts()
 
     public ProductResponse updateProduct(long id, SaveProductRequest request) {
         LOGGER.info("Updating product {}: {}", id, request);
@@ -102,6 +105,18 @@ public class ProductService {
         BeanUtils.copyProperties(request, product);
         Product savedProduct = productRepository.save(product);
         return mapProductResponse(savedProduct);
+    }
+
+    public Page<ProductResponse> getTopRatedProducts(Pageable pageable) {
+        LOGGER.info("Retreving top rated products");
+        Page<Product> productsPage;
+        productsPage = productRepository.findAll(pageable);
+        List<ProductResponse> productDtos = new ArrayList<>();
+        for (Product product : productsPage.getContent()) {
+            ProductResponse productDto = mapProductResponse(product);
+            productDtos.add(productDto);
+        }
+        return new PageImpl<>(productDtos, pageable, productsPage.getTotalElements());
     }
 
     public void deleteProduct(long id) {

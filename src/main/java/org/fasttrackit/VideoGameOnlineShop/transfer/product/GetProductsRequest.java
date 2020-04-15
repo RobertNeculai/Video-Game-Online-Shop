@@ -7,6 +7,15 @@ public class GetProductsRequest {
     private Integer minQuantity;
     private String genre;
     private boolean discount;
+    private Double rating;
+
+    public Double getRating() {
+        return rating;
+    }
+
+    public void setRating(Double rating) {
+        this.rating = rating;
+    }
 
     public boolean isDiscount() {
         return discount;
@@ -46,6 +55,8 @@ public class GetProductsRequest {
                 .add("partialName='" + partialName + "'")
                 .add("minQuantity=" + minQuantity)
                 .add("genre='" + genre + "'")
+                .add("discount='"+discount+"'")
+                .add("rating='"+rating+"'")
                 .toString();
     }
 }

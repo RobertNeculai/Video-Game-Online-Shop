@@ -7,6 +7,8 @@ import org.fasttrackit.VideoGameOnlineShop.transfer.product.SaveProductRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -41,6 +43,13 @@ public class ProductController {
     public ResponseEntity<Page<ProductResponse>> getProducts(GetProductsRequest request, Pageable pageable) {
 
         Page<ProductResponse> products = productService.getProducts(request, pageable);
+        return new ResponseEntity<>(products, HttpStatus.OK);
+    }
+
+    @GetMapping("/top")
+    public ResponseEntity<Page<ProductResponse>> getTopRatedProducts(@PageableDefault(sort = "averageRating", direction = Sort.Direction.DESC) Pageable pageable) {
+
+        Page<ProductResponse> products = productService.getTopRatedProducts(pageable);
         return new ResponseEntity<>(products, HttpStatus.OK);
     }
 

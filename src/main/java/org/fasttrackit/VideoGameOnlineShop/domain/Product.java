@@ -3,10 +3,7 @@ package org.fasttrackit.VideoGameOnlineShop.domain;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.ManyToMany;
 import javax.validation.constraints.NotNull;
-import java.util.HashSet;
-import java.util.Set;
 import java.util.StringJoiner;
 
 @Entity
@@ -25,6 +22,24 @@ public class Product {
     private String imageUrl;
     private String genre;
     private boolean discount;
+    private double averageRating;
+    private double totalRating;
+
+    public double getTotalRating() {
+        return totalRating;
+    }
+
+    public void setTotalRating(double totalRating) {
+        this.totalRating = totalRating;
+    }
+
+    public double getAverageRating() {
+        return averageRating;
+    }
+
+    public void setAverageRating(double averageRating) {
+        this.averageRating = averageRating;
+    }
 
     public boolean isDiscount() {
         return discount;
@@ -100,6 +115,7 @@ public class Product {
                 .add("quantity=" + quantity)
                 .add("imageUrl='" + imageUrl + "'")
                 .add("genre='" + genre + "'")
+                .add("averageRating='" + averageRating + "'")
                 .toString();
     }
 

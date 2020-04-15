@@ -12,6 +12,15 @@ public class ProductResponse {
     private String imageUrl;
     private String genre;
     private boolean discount;
+    private double averageRating;
+
+    public double getAverageRating() {
+        return averageRating;
+    }
+
+    public void setAverageRating(double averageRating) {
+        this.averageRating = averageRating;
+    }
 
     public boolean isDiscount() {
         return discount;
@@ -87,6 +96,7 @@ public class ProductResponse {
                 .add("quantity=" + quantity)
                 .add("imageUrl='" + imageUrl + "'")
                 .add("genre='" + genre + "'")
+                .add("averageRating='"+averageRating+"'")
                 .toString();
     }
 }
