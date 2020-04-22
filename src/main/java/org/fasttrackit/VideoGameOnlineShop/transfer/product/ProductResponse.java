@@ -1,5 +1,7 @@
 package org.fasttrackit.VideoGameOnlineShop.transfer.product;
 
+import org.fasttrackit.VideoGameOnlineShop.domain.Discount;
+
 import java.util.StringJoiner;
 
 public class ProductResponse {
@@ -11,8 +13,9 @@ public class ProductResponse {
     private int quantity;
     private String imageUrl;
     private String genre;
-    private boolean discount;
+    private Discount discount;
     private double averageRating;
+
 
     public double getAverageRating() {
         return averageRating;
@@ -22,11 +25,11 @@ public class ProductResponse {
         this.averageRating = averageRating;
     }
 
-    public boolean isDiscount() {
+    public Discount getDiscount() {
         return discount;
     }
 
-    public void setDiscount(boolean discount) {
+    public void setDiscount(Discount discount) {
         this.discount = discount;
     }
 
@@ -97,6 +100,7 @@ public class ProductResponse {
                 .add("imageUrl='" + imageUrl + "'")
                 .add("genre='" + genre + "'")
                 .add("averageRating='"+averageRating+"'")
+                .add("discount='"+discount+"'")
                 .toString();
     }
 }

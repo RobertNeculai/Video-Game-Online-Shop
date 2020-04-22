@@ -1,5 +1,6 @@
 package org.fasttrackit.VideoGameOnlineShop.service;
 
+
 import org.fasttrackit.VideoGameOnlineShop.domain.Product;
 import org.fasttrackit.VideoGameOnlineShop.exception.ResourceNotFoundException;
 import org.fasttrackit.VideoGameOnlineShop.persistance.ProductRepository;
@@ -13,16 +14,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
 @Service
 public class ProductService {
     private static final Logger LOGGER = LoggerFactory.getLogger(ProductService.class);
-
     private final ProductRepository productRepository;
 
     @Autowired
@@ -39,7 +39,7 @@ public class ProductService {
         product.setQuantity(request.getQuantity());
         product.setImageUrl(request.getImageUrl());
         product.setGenre(request.getGenre());
-        product.setDiscount(request.isDiscount());
+        product.setDiscount(request.getDiscount());
 
         Product savedProduct = productRepository.save(product);
         return mapProductResponse(savedProduct);
@@ -59,6 +59,8 @@ public class ProductService {
 
     private ProductResponse mapProductResponse(Product product) {
         ProductResponse productDto = new ProductResponse();
+        discountApplier(product);
+        priceCalculator(product);
         productDto.setId(product.getId());
         productDto.setName(product.getName());
         productDto.setPrice(product.getPrice());
@@ -66,9 +68,32 @@ public class ProductService {
         productDto.setImageUrl(product.getImageUrl());
         productDto.setQuantity(product.getQuantity());
         productDto.setGenre(product.getGenre());
-        productDto.setDiscount(product.isDiscount());
+        productDto.setDiscount(product.getDiscount());
         productDto.setAverageRating(product.getAverageRating());
         return productDto;
+    }
+
+    private void discountApplier(Product product) {
+        if(product.getDiscount().getStartDate()!=null)
+        {
+            if(LocalDateTime.now().isAfter(product.getDiscount().getStartDate()) && product.getDiscount().getStartDate().isBefore(product.getDiscount().getEndDate()) &&
+                    LocalDateTime.now().isBefore(product.getDiscount().getEndDate())) {
+                double price = product.getPrice();
+                LOGGER.info("Product{} full price {}",product.getId(),product.getDiscount().getFullPrice());
+                double v1 = product.getDiscount().getLevel() * price;
+                double v =  v1/ 100;
+                product.setPrice((price - v));
+                
+            }
+        }
+    }
+    private void priceCalculator(Product product){
+        if(product.getDiscount().getEndDate() != null)
+            if(LocalDateTime.now().isAfter(product.getDiscount().getEndDate()) && product.getPrice()!=product.getDiscount().getFullPrice()) {
+                LOGGER.info("Product{} reverting to original price {}",product.getId(),product.getDiscount().getFullPrice());
+                product.setPrice(product.getDiscount().getFullPrice());
+            }
+
     }
 
     public Page<ProductResponse> getProducts(GetProductsRequest request, Pageable pageable) {
@@ -81,8 +106,8 @@ public class ProductService {
                 productsPage = productRepository.findByNameContaining(request.getPartialName(), pageable);
             else if (request.getGenre() != null)
                 productsPage = productRepository.findByGenreContaining(request.getGenre(), pageable);
-            else if (request.isDiscount())
-                productsPage = productRepository.findByDiscount(request.isDiscount(), pageable);
+            else if (request.getDiscount()!=null)
+                productsPage = productRepository.findByDiscount(request.getDiscount(), pageable);
             else if (request.getRating() != null)
                 productsPage = productRepository.findByAverageRatingGreaterThanEqual(request.getRating(), pageable);
             else
@@ -113,6 +138,8 @@ public class ProductService {
         productsPage = productRepository.findAll(pageable);
         List<ProductResponse> productDtos = new ArrayList<>();
         for (Product product : productsPage.getContent()) {
+            priceCalculator(product);
+            discountApplier(product);
             ProductResponse productDto = mapProductResponse(product);
             productDtos.add(productDto);
         }

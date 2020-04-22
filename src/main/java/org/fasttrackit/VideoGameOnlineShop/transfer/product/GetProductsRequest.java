@@ -1,12 +1,14 @@
 package org.fasttrackit.VideoGameOnlineShop.transfer.product;
 
+import org.fasttrackit.VideoGameOnlineShop.domain.Discount;
+
 import java.util.StringJoiner;
 
 public class GetProductsRequest {
     private String partialName;
     private Integer minQuantity;
     private String genre;
-    private boolean discount;
+    private Discount discount;
     private Double rating;
 
     public Double getRating() {
@@ -17,11 +19,11 @@ public class GetProductsRequest {
         this.rating = rating;
     }
 
-    public boolean isDiscount() {
+    public Discount getDiscount() {
         return discount;
     }
 
-    public void setDiscount(boolean discount) {
+    public void setDiscount(Discount discount) {
         this.discount = discount;
     }
 

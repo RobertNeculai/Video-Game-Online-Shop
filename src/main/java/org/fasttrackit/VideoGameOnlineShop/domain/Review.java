@@ -1,8 +1,6 @@
 package org.fasttrackit.VideoGameOnlineShop.domain;
 
-import org.fasttrackit.VideoGameOnlineShop.transfer.product.ProductResponse;
 import org.hibernate.validator.constraints.Range;
-import org.springframework.beans.factory.annotation.Value;
 
 import javax.persistence.*;
 import java.util.StringJoiner;
@@ -13,7 +11,7 @@ public class Review {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
     private String content;
-    @Range(min=0,max = 5)
+    @Range(min = 0, max = 5)
     private int rating;
 
 
@@ -27,7 +25,7 @@ public class Review {
     }
 
     public void setRating(int rating) {
-            this.rating = rating;
+        this.rating = rating;
     }
 
     public long getId() {

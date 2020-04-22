@@ -21,9 +21,10 @@ public class Product {
     private int quantity;
     private String imageUrl;
     private String genre;
-    private boolean discount;
+    private Discount discount;
     private double averageRating;
     private double totalRating;
+
 
     public double getTotalRating() {
         return totalRating;
@@ -41,11 +42,11 @@ public class Product {
         this.averageRating = averageRating;
     }
 
-    public boolean isDiscount() {
+    public Discount getDiscount() {
         return discount;
     }
 
-    public void setDiscount(boolean discount) {
+    public void setDiscount(Discount discount) {
         this.discount = discount;
     }
 

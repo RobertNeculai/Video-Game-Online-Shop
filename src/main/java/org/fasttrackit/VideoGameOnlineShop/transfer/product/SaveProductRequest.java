@@ -1,5 +1,7 @@
 package org.fasttrackit.VideoGameOnlineShop.transfer.product;
 
+import org.fasttrackit.VideoGameOnlineShop.domain.Discount;
+
 import javax.validation.constraints.NotNull;
 import java.util.StringJoiner;
 
@@ -8,18 +10,19 @@ public class SaveProductRequest {
     @NotNull
     private String name;
     @NotNull
-    private Double price;
+    private double price;
     @NotNull
-    private Integer quantity;
+    private int quantity;
     private String imageUrl;
     private String genre;
-    private boolean discount;
+    private Discount discount;
 
-    public boolean isDiscount() {
+
+    public Discount getDiscount() {
         return discount;
     }
 
-    public void setDiscount(boolean discount) {
+    public void setDiscount(Discount discount) {
         this.discount = discount;
     }
 
@@ -80,6 +83,7 @@ public class SaveProductRequest {
                 .add("quantity=" + quantity)
                 .add("imageUrl='" + imageUrl + "'")
                 .add("genre='" + genre + "'")
+                .add("discount='"+discount+"'")
                 .toString();
     }
 }
