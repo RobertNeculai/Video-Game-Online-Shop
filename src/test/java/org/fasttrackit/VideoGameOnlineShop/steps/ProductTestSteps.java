@@ -1,10 +1,13 @@
 package org.fasttrackit.VideoGameOnlineShop.steps;
 
+import org.fasttrackit.VideoGameOnlineShop.domain.Discount;
 import org.fasttrackit.VideoGameOnlineShop.service.ProductService;
 import org.fasttrackit.VideoGameOnlineShop.transfer.product.ProductResponse;
 import org.fasttrackit.VideoGameOnlineShop.transfer.product.SaveProductRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+
+import java.time.LocalDateTime;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.notNullValue;
@@ -21,6 +24,11 @@ public class ProductTestSteps {
         request.setName("Phone");
         request.setQuantity(100);
         request.setPrice(300.5);
+        Discount discount=new Discount();
+        discount.setLevel(0);
+        discount.setStartDate(LocalDateTime.now());
+        discount.setEndDate(LocalDateTime.now().plusMinutes(1));
+        request.setDiscount(discount);
         ProductResponse product = productService.createProduct(request);
         assertThat(product, notNullValue());
         assertThat(product.getId(), greaterThan(0L));

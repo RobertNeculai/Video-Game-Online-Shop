@@ -62,7 +62,7 @@ public class Cart {
             CartProducts cartProducts = iterator.next();
 
             if (cartProducts.getCart().equals(this) &&
-                    cartProducts.getProduct().equals(product) && cartProducts.getQuantity()<1) {
+                    cartProducts.getProduct().equals(product) && cartProducts.getQuantity()==1) {
                 iterator.remove();
                 cartProducts.setCart(null);
                 cartProducts.setProduct(null);
