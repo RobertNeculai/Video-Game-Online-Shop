@@ -1,8 +1,10 @@
 package org.fasttrackit.VideoGameOnlineShop.domain;
 
+import net.bytebuddy.implementation.bind.annotation.Default;
 import org.springframework.beans.factory.annotation.Value;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.util.Objects;
 
 @Entity
@@ -19,6 +21,9 @@ public class CartProducts {
 
     @Column(name = "quantity")
     private int quantity;
+    @Column(name = "productPrice")
+    @NotNull
+    private Double price;
 
     public CartProducts() {
     }
@@ -60,6 +65,14 @@ public class CartProducts {
 
     public void setQuantity(int quantity) {
         this.quantity = quantity;
+    }
+
+    public Double getPrice() {
+        return price;
+    }
+
+    public void setPrice(Double price) {
+        this.price = price;
     }
 
     @Override

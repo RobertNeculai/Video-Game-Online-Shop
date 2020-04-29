@@ -32,6 +32,26 @@ public class Cart {
         if (productNotPresent) {
             CartProducts cartProducts = new CartProducts(this, product);
             cartProducts.setQuantity(1);
+            cartProducts.setPrice(product.getPrice());
+            products.add(cartProducts);
+        }
+    }
+
+    public void addProductToCart(Product product, int quantity, double price) {
+        boolean productNotPresent = true;
+
+        for (CartProducts cartProducts : products) {
+            if (cartProducts.getCart().equals(this) && cartProducts.getProduct().equals(product)) {
+                cartProducts.setQuantity(cartProducts.getQuantity() + quantity);
+                productNotPresent = false;
+                break;
+            }
+        }
+
+        if (productNotPresent) {
+            CartProducts cartProducts = new CartProducts(this, product);
+            cartProducts.setQuantity(quantity);
+            cartProducts.setPrice(price);
             products.add(cartProducts);
         }
     }
@@ -42,11 +62,14 @@ public class Cart {
             CartProducts cartProducts = iterator.next();
 
             if (cartProducts.getCart().equals(this) &&
-                    cartProducts.getProduct().equals(product)) {
+                    cartProducts.getProduct().equals(product) && cartProducts.getQuantity()<1) {
                 iterator.remove();
                 cartProducts.setCart(null);
                 cartProducts.setProduct(null);
             }
+            else if(cartProducts.getCart().equals(this) &&
+                    cartProducts.getProduct().equals(product))
+                cartProducts.setQuantity(cartProducts.getQuantity()-1);
         }
     }
 

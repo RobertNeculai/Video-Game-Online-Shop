@@ -6,15 +6,18 @@ import org.fasttrackit.VideoGameOnlineShop.domain.Customer;
 import org.fasttrackit.VideoGameOnlineShop.domain.Product;
 import org.fasttrackit.VideoGameOnlineShop.exception.ResourceNotFoundException;
 import org.fasttrackit.VideoGameOnlineShop.persistance.CartRepository;
+import org.fasttrackit.VideoGameOnlineShop.transfer.cart.AddProductToCartRequest;
 import org.fasttrackit.VideoGameOnlineShop.transfer.cart.AddProductsToCartRequest;
 import org.fasttrackit.VideoGameOnlineShop.transfer.cart.CartResponse;
 import org.fasttrackit.VideoGameOnlineShop.transfer.cart.ProductInCartResponse;
+import org.fasttrackit.VideoGameOnlineShop.transfer.product.ProductResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -30,6 +33,16 @@ public class CartService {
         this.cartRepository = cartRepository;
         this.customerService = customerService;
         this.productService = productService;
+    }
+
+    private void priceChecker(ProductInCartResponse productInCartResponse) {
+        Product product=productService.findProduct(productInCartResponse.getId());
+        if (product.getDiscount().getEndDate() != null && productInCartResponse.getPrice()!=product.getPrice())
+            if (LocalDateTime.now().isAfter(product.getDiscount().getEndDate())) {
+                LOGGER.info("Product{} reverting to original price {}", product.getId(), product.getPrice());
+                productInCartResponse.setPrice(product.getPrice());
+            }
+
     }
 
     @Transactional
@@ -48,6 +61,19 @@ public class CartService {
     }
 
     @Transactional
+    public void addProductToCart(AddProductToCartRequest request) {
+        LOGGER.info("Adding product to cart: {}", request);
+        Cart cart = cartRepository.findById(request.getCustomerId()).orElse(new Cart());
+        if (cart.getCustomer() == null) {
+            Customer customer = customerService.getCustomer(request.getCustomerId());
+            cart.setCustomer(customer);
+        }
+        Product product = productService.findProduct(request.getProductId());
+        cart.addProductToCart(product, request.getQuantity(), request.getPrice());
+        cartRepository.save(cart);
+    }
+
+    @Transactional
     public CartResponse getCart(long customerId) {
         LOGGER.info("Retrieving cart items for customer {}", customerId);
         Cart cart = cartRepository.findById(customerId).orElseThrow(() -> new ResourceNotFoundException("Cart " + customerId + " does not exist"));
@@ -60,7 +86,9 @@ public class CartService {
             ProductInCartResponse productDto = new ProductInCartResponse();
             productDto.setId(nextProduct.getProduct().getId());
             productDto.setName(nextProduct.getProduct().getName());
-            productDto.setPrice(nextProduct.getProduct().getPrice());
+            productDto.setPrice(nextProduct.getPrice());
+            productDto.setQuantity(nextProduct.getQuantity());
+            priceChecker(productDto);
             productDtos.add(productDto);
         }
         cartResponse.setProducts(productDtos);

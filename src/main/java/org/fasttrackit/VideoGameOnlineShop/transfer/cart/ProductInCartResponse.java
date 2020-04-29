@@ -6,6 +6,15 @@ public class ProductInCartResponse {
     private long id;
     private String name;
     private double price;
+    private int quantity;
+
+    public int getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
+    }
 
     public long getId() {
         return id;
@@ -37,6 +46,7 @@ public class ProductInCartResponse {
                 .add("id=" + id)
                 .add("name='" + name + "'")
                 .add("price=" + price)
+                .add("quantity="+quantity)
                 .toString();
     }
 }

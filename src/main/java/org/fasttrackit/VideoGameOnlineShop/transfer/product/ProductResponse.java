@@ -10,6 +10,7 @@ public class ProductResponse {
     private String description;
     private String name;
     private double price;
+    private double salesPrice;
     private int quantity;
     private String imageUrl;
     private String genre;
@@ -19,6 +20,14 @@ public class ProductResponse {
 
     public double getAverageRating() {
         return averageRating;
+    }
+
+    public double getSalesPrice() {
+        return salesPrice;
+    }
+
+    public void setSalesPrice(double salesPrice) {
+        this.salesPrice = salesPrice;
     }
 
     public void setAverageRating(double averageRating) {
@@ -96,6 +105,7 @@ public class ProductResponse {
                 .add("description='" + description + "'")
                 .add("name='" + name + "'")
                 .add("price=" + price)
+                .add("salesPrice"+ salesPrice)
                 .add("quantity=" + quantity)
                 .add("imageUrl='" + imageUrl + "'")
                 .add("genre='" + genre + "'")

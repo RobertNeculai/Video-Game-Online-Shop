@@ -8,7 +8,7 @@ import javax.validation.constraints.NotNull;
 import java.util.StringJoiner;
 
 @Entity
-public class Customer {
+public class Customer extends Account {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;

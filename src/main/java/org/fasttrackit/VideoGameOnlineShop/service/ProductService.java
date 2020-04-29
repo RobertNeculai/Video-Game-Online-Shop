@@ -59,8 +59,6 @@ public class ProductService {
 
     private ProductResponse mapProductResponse(Product product) {
         ProductResponse productDto = new ProductResponse();
-        discountApplier(product);
-        priceCalculator(product);
         productDto.setId(product.getId());
         productDto.setName(product.getName());
         productDto.setPrice(product.getPrice());
@@ -70,28 +68,30 @@ public class ProductService {
         productDto.setGenre(product.getGenre());
         productDto.setDiscount(product.getDiscount());
         productDto.setAverageRating(product.getAverageRating());
+        discountApplier(productDto);
+        priceCalculator(productDto);
         return productDto;
     }
 
-    private void discountApplier(Product product) {
+    private void discountApplier(ProductResponse product) {
         if(product.getDiscount().getStartDate()!=null)
         {
             if(LocalDateTime.now().isAfter(product.getDiscount().getStartDate()) && product.getDiscount().getStartDate().isBefore(product.getDiscount().getEndDate()) &&
                     LocalDateTime.now().isBefore(product.getDiscount().getEndDate())) {
                 double price = product.getPrice();
-                LOGGER.info("Product{} full price {}",product.getId(),product.getDiscount().getFullPrice());
+                LOGGER.info("Product{} full price {}",product.getId(),product.getPrice());
                 double v1 = product.getDiscount().getLevel() * price;
                 double v =  v1/ 100;
-                product.setPrice((price - v));
+                product.setSalesPrice((price - v));
                 
             }
         }
     }
-    private void priceCalculator(Product product){
-        if(product.getDiscount().getEndDate() != null)
-            if(LocalDateTime.now().isAfter(product.getDiscount().getEndDate()) && product.getPrice()!=product.getDiscount().getFullPrice()) {
-                LOGGER.info("Product{} reverting to original price {}",product.getId(),product.getDiscount().getFullPrice());
-                product.setPrice(product.getDiscount().getFullPrice());
+    private void priceCalculator(ProductResponse product){
+        if(product.getDiscount().getEndDate() != null  && product.getSalesPrice()!=product.getPrice())
+            if(LocalDateTime.now().isAfter(product.getDiscount().getEndDate())) {
+                LOGGER.info("Product{} reverting to original price {}",product.getId(),product.getPrice());
+                product.setSalesPrice(product.getPrice());
             }
 
     }
@@ -138,8 +138,6 @@ public class ProductService {
         productsPage = productRepository.findAll(pageable);
         List<ProductResponse> productDtos = new ArrayList<>();
         for (Product product : productsPage.getContent()) {
-            priceCalculator(product);
-            discountApplier(product);
             ProductResponse productDto = mapProductResponse(product);
             productDtos.add(productDto);
         }
