@@ -81,7 +81,7 @@ public class CartServiceIntegrationTest {
         ProductInCartResponse nextProduct = productIterator.next();
         assertThat(nextProduct,notNullValue());
         assertThat(nextProduct.getId(),is(product.getId()));
-        assertThat(cart2.getId(),isA(NullPointerException.class));
+        assertThat(cart2.getId(),is(NullPointerException.class));
         assertThat(cart2,is(NullPointerException.class));
 
 
