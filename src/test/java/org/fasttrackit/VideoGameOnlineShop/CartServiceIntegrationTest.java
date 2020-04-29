@@ -76,6 +76,11 @@ public class CartServiceIntegrationTest {
         deleteRequest.setProductsIds(list);
         cartService.removeProductsFromCart(deleteRequest);
         CartResponse cart2=cartService.getCart(request.getCustomerId());
+        Iterator<ProductInCartResponse> productIterator = cart2.getProducts().iterator();
+        assertThat(productIterator.hasNext(),is(true));
+        ProductInCartResponse nextProduct = productIterator.next();
+        assertThat(nextProduct,notNullValue());
+        assertThat(nextProduct.getId(),is(product.getId()));
         assertThat(cart2,is(null));
 
 
