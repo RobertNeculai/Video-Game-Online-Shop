@@ -5,16 +5,16 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Set;
 
-@Entity
+@Entity()
 public class Cart {
     @Id
     private long id;
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @OneToOne(fetch = FetchType.LAZY,cascade = CascadeType.ALL)
     @MapsId
     private Customer customer;
 
-    @OneToMany(mappedBy = "cart", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "cart",fetch = FetchType.LAZY,cascade = CascadeType.ALL,orphanRemoval = true)
     private Set<CartProducts> products = new HashSet<>();
 
 
@@ -63,9 +63,10 @@ public class Cart {
 
             if (cartProducts.getCart().equals(this) &&
                     cartProducts.getProduct().equals(product) && cartProducts.getQuantity()==1) {
-                iterator.remove();
                 cartProducts.setCart(null);
                 cartProducts.setProduct(null);
+                iterator.remove();
+
             }
             else if(cartProducts.getCart().equals(this) &&
                     cartProducts.getProduct().equals(product))

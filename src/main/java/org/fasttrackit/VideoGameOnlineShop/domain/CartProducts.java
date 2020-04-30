@@ -1,28 +1,28 @@
 package org.fasttrackit.VideoGameOnlineShop.domain;
 
 import net.bytebuddy.implementation.bind.annotation.Default;
+import org.hibernate.annotations.Cascade;
 import org.springframework.beans.factory.annotation.Value;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.util.Objects;
 
-@Entity
+@Entity()
 @Table(name = "cart_product")
 public class CartProducts {
     @EmbeddedId
     private CartProductsId id;
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY,cascade = CascadeType.ALL)
     @MapsId("cartId")
     private Cart cart;
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY,cascade = CascadeType.ALL)
     @MapsId("productId")
     private Product product;
 
     @Column(name = "quantity")
     private int quantity;
     @Column(name = "productPrice")
-    @NotNull
     private Double price;
 
     public CartProducts() {

@@ -10,7 +10,6 @@ import org.fasttrackit.VideoGameOnlineShop.transfer.cart.AddProductToCartRequest
 import org.fasttrackit.VideoGameOnlineShop.transfer.cart.AddProductsToCartRequest;
 import org.fasttrackit.VideoGameOnlineShop.transfer.cart.CartResponse;
 import org.fasttrackit.VideoGameOnlineShop.transfer.cart.ProductInCartResponse;
-import org.fasttrackit.VideoGameOnlineShop.transfer.product.ProductResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
