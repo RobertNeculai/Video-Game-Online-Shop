@@ -37,7 +37,7 @@ public class CustomerService {
     }
 
     //
-    public Customer updateCustomer(long id, SaveProductRequest request) {
+    public Customer updateCustomer(long id, SaveCustomerRequest request) {
         LOGGER.info("Updating product {}: {}", id, request);
         Customer customer = getCustomer(id);
         BeanUtils.copyProperties(request, customer);

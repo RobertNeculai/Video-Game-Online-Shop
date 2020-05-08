@@ -33,4 +33,14 @@ public class CustomerController {
         Customer customer = customerService.getCustomer(id);
         return new ResponseEntity<>(customer, HttpStatus.OK);
     }
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteCustomer(@PathVariable long id) {
+        customerService.deleteCustomer(id);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
+    @PutMapping("/{id}")
+    public ResponseEntity<Customer> updateCustomer(@PathVariable long id,@RequestBody SaveCustomerRequest request){
+        Customer customer=customerService.updateCustomer(id,request);
+        return new ResponseEntity<>(customer,HttpStatus.OK);
+    }
 }
