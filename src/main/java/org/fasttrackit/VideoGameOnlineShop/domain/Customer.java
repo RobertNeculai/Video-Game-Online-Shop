@@ -1,14 +1,14 @@
 package org.fasttrackit.VideoGameOnlineShop.domain;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
+import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
+import java.time.LocalDate;
+import java.util.Date;
 import java.util.StringJoiner;
 
 @Entity
-public class Customer extends Account {
+public class Customer {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
@@ -16,6 +16,37 @@ public class Customer extends Account {
     private String firstName;
     @NotNull
     private String lastName;
+    @NotNull
+    private String email;
+    private String address;
+    @NotNull
+    @Valid
+    @Temporal(TemporalType.DATE)
+    private Date dob;
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public Date getDob() {
+        return dob;
+    }
+
+    public void setDob(Date dob) {
+        this.dob = dob;
+    }
 
     public long getId() {
         return id;
@@ -47,6 +78,9 @@ public class Customer extends Account {
                 .add("id=" + id)
                 .add("firstName='" + firstName + "'")
                 .add("lastName='" + lastName + "'")
+                .add("email='" + email + "'")
+                .add("address='" + address + "'")
+                .add("dob=" + dob)
                 .toString();
     }
 }
