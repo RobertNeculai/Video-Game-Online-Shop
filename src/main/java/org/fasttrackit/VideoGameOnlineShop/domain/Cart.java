@@ -10,7 +10,7 @@ public class Cart {
     @Id
     private long id;
 
-    @OneToOne(fetch = FetchType.LAZY,cascade = CascadeType.ALL)
+    @OneToOne(fetch = FetchType.LAZY,cascade = CascadeType.ALL,orphanRemoval = true)
     @MapsId
     private Customer customer;
 

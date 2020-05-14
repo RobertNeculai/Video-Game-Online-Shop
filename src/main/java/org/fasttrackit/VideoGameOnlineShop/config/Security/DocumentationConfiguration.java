@@ -1,4 +1,4 @@
-package org.fasttrackit.VideoGameOnlineShop.config;
+package org.fasttrackit.VideoGameOnlineShop.config.Security;
 
 
 import org.springframework.context.annotation.Bean;
