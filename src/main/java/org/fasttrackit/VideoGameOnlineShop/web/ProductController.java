@@ -11,6 +11,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -26,7 +27,6 @@ public class ProductController {
     public ProductController(ProductService productService) {
         this.productService = productService;
     }
-
     @PostMapping
     public ResponseEntity<ProductResponse> createProduct(@Valid @RequestBody SaveProductRequest request) {
         ProductResponse product = productService.createProduct(request);
@@ -52,13 +52,11 @@ public class ProductController {
         Page<ProductResponse> products = productService.getTopRatedProducts(pageable);
         return new ResponseEntity<>(products, HttpStatus.OK);
     }
-
     @PutMapping("/{id}")
     public ResponseEntity<ProductResponse> updateProduct(@PathVariable long id, @Valid @RequestBody SaveProductRequest request) {
         ProductResponse product = productService.updateProduct(id, request);
         return new ResponseEntity<>(product, HttpStatus.OK);
     }
-
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteProduct(@PathVariable long id) {
         productService.deleteProduct(id);

@@ -2,6 +2,7 @@ package org.fasttrackit.VideoGameOnlineShop.domain;
 
 import javax.persistence.*;
 import javax.validation.Valid;
+import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 import java.util.Date;
@@ -23,6 +24,18 @@ public class Customer {
     @Valid
     @Temporal(TemporalType.DATE)
     private Date dob;
+    @OneToOne( cascade = CascadeType.ALL,
+            fetch = FetchType.LAZY, optional = false,orphanRemoval = true)
+    @JoinColumn(name = "user_id")
+    private User user;
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
 
     public String getEmail() {
         return email;
