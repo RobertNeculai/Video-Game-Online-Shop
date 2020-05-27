@@ -24,7 +24,15 @@ public class Product {
     private Discount discount;
     private double averageRating;
     private double totalRating;
+    private double SalesPrice;
 
+    public double getSalesPrice() {
+        return SalesPrice;
+    }
+
+    public void setSalesPrice(double salesPrice) {
+        SalesPrice = salesPrice;
+    }
 
     public double getTotalRating() {
         return totalRating;
@@ -117,6 +125,7 @@ public class Product {
                 .add("imageUrl='" + imageUrl + "'")
                 .add("genre='" + genre + "'")
                 .add("averageRating='" + averageRating + "'")
+                .add("SalesPrice= "+SalesPrice+"'")
                 .toString();
     }
 

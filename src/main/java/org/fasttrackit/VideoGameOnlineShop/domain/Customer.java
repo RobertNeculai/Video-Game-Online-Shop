@@ -25,7 +25,7 @@ public class Customer {
     @Temporal(TemporalType.DATE)
     private Date dob;
     @OneToOne( cascade = CascadeType.ALL,
-            fetch = FetchType.LAZY, optional = false,orphanRemoval = true)
+            fetch = FetchType.EAGER, optional = false,orphanRemoval = true)
     @JoinColumn(name = "user_id")
     private User user;
 

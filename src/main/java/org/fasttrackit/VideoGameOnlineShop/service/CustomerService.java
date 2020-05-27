@@ -10,6 +10,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -44,6 +45,11 @@ public class CustomerService  {
     public Customer getCustomer(long id) {
         LOGGER.info("Retrieving Customer {}", id);
         return customerRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Customer " + id + " not found"));
+    }
+    public Customer getCustomerByUser(long id){
+        LOGGER.info("Retrieving Customer by UserId {}", id);
+        return customerRepository.findByUserId(id)
+                .orElseThrow(()->new ResourceNotFoundException(String.format("Customer with UserID {} not found",id)));
     }
 
     //

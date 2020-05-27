@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
 @RequestMapping("/")
-public class TemplateController {
+public class AuthController {
     @GetMapping("login")
     public String getLoginView() {
         return "login";
@@ -14,5 +14,10 @@ public class TemplateController {
     @GetMapping("shop")
     public String getProducts() {
         return "shop";
+    }
+
+    @GetMapping("register")
+    public String getRegisterView(){
+        return "register";
     }
 }

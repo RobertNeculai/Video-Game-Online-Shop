@@ -1,6 +1,7 @@
 package org.fasttrackit.VideoGameOnlineShop.service;
 
 
+import org.fasttrackit.VideoGameOnlineShop.domain.Discount;
 import org.fasttrackit.VideoGameOnlineShop.domain.Product;
 import org.fasttrackit.VideoGameOnlineShop.exception.ResourceNotFoundException;
 import org.fasttrackit.VideoGameOnlineShop.persistance.ProductRepository;
@@ -16,10 +17,11 @@ import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
-
+@Transactional
 @Service
 public class ProductService {
     private static final Logger LOGGER = LoggerFactory.getLogger(ProductService.class);
@@ -40,6 +42,7 @@ public class ProductService {
         product.setImageUrl(request.getImageUrl());
         product.setGenre(request.getGenre());
         product.setDiscount(request.getDiscount());
+        product.setSalesPrice(request.getPrice());
 
         Product savedProduct = productRepository.save(product);
         return mapProductResponse(savedProduct);
@@ -68,6 +71,7 @@ public class ProductService {
         productDto.setGenre(product.getGenre());
         productDto.setDiscount(product.getDiscount());
         productDto.setAverageRating(product.getAverageRating());
+        productDto.setSalesPrice(product.getSalesPrice());
         discountApplier(productDto);
         priceCalculator(productDto);
         return productDto;
@@ -82,16 +86,20 @@ public class ProductService {
                 LOGGER.info("Product{} full price {}",product.getId(),product.getPrice());
                 double v1 = product.getDiscount().getLevel() * price;
                 double v =  v1/ 100;
-                product.setSalesPrice((price - v));
+                product.setSalesPrice(price-v);
+                LOGGER.info("Product SalesPrice {}",product.getSalesPrice());
                 
             }
         }
     }
     private void priceCalculator(ProductResponse product){
-        if(product.getDiscount().getEndDate() != null  && product.getSalesPrice()!=product.getPrice())
-            if(LocalDateTime.now().isAfter(product.getDiscount().getEndDate())) {
+        if(product.getDiscount().getEndDate() != null)
+            if(LocalDateTime.now().isAfter(product.getDiscount().getEndDate()) && product.getSalesPrice()!=product.getPrice()) {
                 LOGGER.info("Product{} reverting to original price {}",product.getId(),product.getPrice());
                 product.setSalesPrice(product.getPrice());
+                product.getDiscount().setLevel(0);
+                product.getDiscount().setEndDate(null);
+                product.getDiscount().setStartDate(null);
             }
 
     }
