@@ -8,6 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
 @CrossOrigin
@@ -44,7 +45,7 @@ public class CustomerController {
         return new ResponseEntity<>(customer,HttpStatus.OK);
     }
     @GetMapping("/userid/{id}")
-    public ResponseEntity<Customer> getCustomerByUser(@PathVariable long id){
+    public ResponseEntity<Customer> getCustomerByUserId(@PathVariable long id){
         Customer customer=customerService.getCustomerByUser(id);
         return new ResponseEntity<>(customer,HttpStatus.OK);
 

@@ -1,6 +1,7 @@
 package org.fasttrackit.VideoGameOnlineShop.config;
 
 import org.fasttrackit.VideoGameOnlineShop.config.Security.AuthorityType;
+import org.fasttrackit.VideoGameOnlineShop.service.UserPrincipalDetailsService;
 import org.fasttrackit.VideoGameOnlineShop.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -19,10 +20,10 @@ import java.util.concurrent.TimeUnit;
 @EnableWebSecurity
 public class ApplicationSecurityConfiguration extends WebSecurityConfigurerAdapter {
     private final PasswordEncoder passwordEncoder;
-    private final UserService userService;
+    private final UserPrincipalDetailsService userService;
 
     @Autowired
-    public ApplicationSecurityConfiguration(PasswordEncoder passwordEncoder, UserService userService) {
+    public ApplicationSecurityConfiguration(PasswordEncoder passwordEncoder, UserPrincipalDetailsService userService) {
         this.passwordEncoder = passwordEncoder;
         this.userService = userService;
     }
@@ -35,23 +36,29 @@ public class ApplicationSecurityConfiguration extends WebSecurityConfigurerAdapt
                 .antMatchers(HttpMethod.DELETE,"/products").hasAuthority(AuthorityType.ADMIN.name())
                 .antMatchers(HttpMethod.POST,"/products").hasAuthority(AuthorityType.ADMIN.name())
                 .antMatchers(HttpMethod.PUT,"/products").hasAuthority(AuthorityType.ADMIN.name())
-                .antMatchers("/*")
-                .permitAll()
+                .antMatchers("/*").permitAll()
+
+                .antMatchers(HttpMethod.GET, "/newsfeed/**").authenticated()
+                .antMatchers(HttpMethod.DELETE, "/newsfeed/**").authenticated()
+                .antMatchers(HttpMethod.PUT, "/newsfeed/**").authenticated()
+                .antMatchers(HttpMethod.GET, "/timeline/**").authenticated()
+                .antMatchers(HttpMethod.DELETE, "/timeline/**").authenticated()
+                .antMatchers(HttpMethod.PUT, "/timeline/**").authenticated()
                 .anyRequest()
                 .authenticated()
                 .and()
                 .formLogin()
                 .loginPage("/login")
-                .permitAll()
                 .loginProcessingUrl("/login")
-                .defaultSuccessUrl("http://localhost:63342/online-shop-web-app/shop.html", true)
+                .permitAll()
+                .defaultSuccessUrl("http://localhost:63342/online-shop-web-app/LogedInPage.html")
                 .passwordParameter("password")
                 .usernameParameter("username")
                 .and()
                 .rememberMe()
+                .userDetailsService(userService)
                 .tokenValiditySeconds((int) TimeUnit.DAYS.toSeconds(21))
                 .key("uniqueAndSecret")
-                .userDetailsService(userService)
                 .and()
                 .logout()
                 .logoutUrl("/logout")
@@ -62,7 +69,7 @@ public class ApplicationSecurityConfiguration extends WebSecurityConfigurerAdapt
     }
 
     @Override
-    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+    protected void configure(AuthenticationManagerBuilder auth) {
         auth.authenticationProvider(daoAuthenticationProvider());
     }
 
@@ -70,7 +77,7 @@ public class ApplicationSecurityConfiguration extends WebSecurityConfigurerAdapt
     public DaoAuthenticationProvider daoAuthenticationProvider() {
         DaoAuthenticationProvider provider = new DaoAuthenticationProvider();
         provider.setPasswordEncoder(passwordEncoder);
-        provider.setUserDetailsService(userService);
+        provider.setUserDetailsService(this.userService);
         return provider;
     }
 }

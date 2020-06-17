@@ -1,4 +1,4 @@
-package org.fasttrackit.VideoGameOnlineShop.auth;
+package org.fasttrackit.VideoGameOnlineShop.config;
 
 import org.fasttrackit.VideoGameOnlineShop.domain.User;
 import org.springframework.security.core.GrantedAuthority;

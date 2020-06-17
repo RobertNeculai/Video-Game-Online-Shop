@@ -10,7 +10,11 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
+import java.io.IOException;
 
 @CrossOrigin
 @RequestMapping("/carts")
@@ -46,5 +50,11 @@ public class CartController {
         cartService.removeProductsFromCart(request);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
-
+    private void setAccesControlHeaders(HttpServletResponse resp)
+    {
+        // CORS configuration ( cross origin resource sharing)
+        resp.setHeader("Access-Control-Allow-Origin","*");
+        resp.setHeader("Access-Control-Allow-Methods","GET, POST, PUT, DELETE");
+        resp.setHeader("Access-Control-Allow-Headers","content-type");
+    }
 }
