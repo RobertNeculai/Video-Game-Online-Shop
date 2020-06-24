@@ -33,25 +33,30 @@ public class ApplicationSecurityConfiguration extends WebSecurityConfigurerAdapt
         http
                 .csrf().disable()
                 .authorizeRequests()
+                .antMatchers("/",
+                        "/css/**",
+                        "/fonts/**",
+                        "/images/**",
+                        "/js/**",
+                        "/js/register",
+                        "/js/register.js")
+                .permitAll()
+                .antMatchers(HttpMethod.GET,"/**").permitAll()
                 .antMatchers(HttpMethod.DELETE,"/products").hasAuthority(AuthorityType.ADMIN.name())
                 .antMatchers(HttpMethod.POST,"/products").hasAuthority(AuthorityType.ADMIN.name())
                 .antMatchers(HttpMethod.PUT,"/products").hasAuthority(AuthorityType.ADMIN.name())
+                .antMatchers(HttpMethod.POST,"/user").permitAll()
+                .antMatchers("/register").permitAll()
                 .antMatchers("/*").permitAll()
-
-                .antMatchers(HttpMethod.GET, "/newsfeed/**").authenticated()
-                .antMatchers(HttpMethod.DELETE, "/newsfeed/**").authenticated()
-                .antMatchers(HttpMethod.PUT, "/newsfeed/**").authenticated()
-                .antMatchers(HttpMethod.GET, "/timeline/**").authenticated()
-                .antMatchers(HttpMethod.DELETE, "/timeline/**").authenticated()
-                .antMatchers(HttpMethod.PUT, "/timeline/**").authenticated()
                 .anyRequest()
                 .authenticated()
                 .and()
                 .formLogin()
                 .loginPage("/login")
-                .loginProcessingUrl("/login")
                 .permitAll()
-                .defaultSuccessUrl("http://localhost:63342/online-shop-web-app/LogedInPage.html")
+                .loginProcessingUrl("/login")
+                .defaultSuccessUrl("/shop")
+                .failureForwardUrl("/register")
                 .passwordParameter("password")
                 .usernameParameter("username")
                 .and()

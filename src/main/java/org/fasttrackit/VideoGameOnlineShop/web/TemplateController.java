@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @CrossOrigin
 @Controller
 @RequestMapping("/")
-public class AuthController {
+public class TemplateController {
     @GetMapping("login")
     public String getLoginView() {
         return "login";
@@ -20,5 +20,16 @@ public class AuthController {
     @GetMapping("register")
     public String getRegisterView(){
         return "register";
+    }
+
+
+    @GetMapping("CartPage")
+    public String getCartPageView(){
+        return "CartPage";
+    }
+
+    @GetMapping("single-product")
+    public String getSingleProductPageView(){
+        return "single-product";
     }
 }

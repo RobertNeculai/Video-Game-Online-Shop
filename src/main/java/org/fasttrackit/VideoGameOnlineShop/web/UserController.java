@@ -29,7 +29,10 @@ public class UserController {
         UserResponse user = userService.getUserBySession(principal.getName());
         return user.getId();
     }
-
+    @GetMapping("/username")
+    public boolean UsernameAlreadyInUse(String username){
+        return userService.VerifyIfUsernameAvailable(username);
+    }
     @PostMapping
     public ResponseEntity<User> registerUser(@Valid @RequestBody SaveUserRequest request) {
         User user = userService.registerUser(request);
