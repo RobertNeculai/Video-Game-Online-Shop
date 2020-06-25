@@ -27,7 +27,9 @@ public class UserController {
     @ResponseBody
     public Long currentLoggedUserNameId(Principal principal) {
         UserResponse user = userService.getUserBySession(principal.getName());
-        return user.getId();
+        if(user!=null)
+            return user.getId();
+        return null;
     }
     @GetMapping("/username")
     public boolean UsernameAlreadyInUse(String username){

@@ -65,11 +65,9 @@ public class UserService {
         return userResponse;
     }
     public boolean VerifyIfUsernameAvailable(String username) {
-        LOGGER.info("Checking if user by username is available {}", username);
-
-        User user=userRepository.findUserByUsername(username)
-                .orElseThrow(()->new ResourceNotFoundException(String.format("Username %s is available", username)));
-        return !user.getUsername().equals(username);
+        LOGGER.info("Checking if username {} is available ", username);
+        User user=userRepository.findUserByUsername(username);
+        return user==null;
     }
 
 }

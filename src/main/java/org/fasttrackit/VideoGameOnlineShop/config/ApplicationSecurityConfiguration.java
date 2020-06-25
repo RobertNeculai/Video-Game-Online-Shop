@@ -39,14 +39,15 @@ public class ApplicationSecurityConfiguration extends WebSecurityConfigurerAdapt
                         "/images/**",
                         "/js/**",
                         "/js/register",
-                        "/js/register.js")
+                        "/js/UserRegister.js")
                 .permitAll()
                 .antMatchers(HttpMethod.GET,"/**").permitAll()
                 .antMatchers(HttpMethod.DELETE,"/products").hasAuthority(AuthorityType.ADMIN.name())
                 .antMatchers(HttpMethod.POST,"/products").hasAuthority(AuthorityType.ADMIN.name())
                 .antMatchers(HttpMethod.PUT,"/products").hasAuthority(AuthorityType.ADMIN.name())
                 .antMatchers(HttpMethod.POST,"/user").permitAll()
-                .antMatchers("/register").permitAll()
+                .antMatchers(HttpMethod.POST,"/user/username").permitAll()
+                .antMatchers("/UserRegister").permitAll()
                 .antMatchers("/*").permitAll()
                 .anyRequest()
                 .authenticated()
@@ -56,7 +57,6 @@ public class ApplicationSecurityConfiguration extends WebSecurityConfigurerAdapt
                 .permitAll()
                 .loginProcessingUrl("/login")
                 .defaultSuccessUrl("/shop")
-                .failureForwardUrl("/register")
                 .passwordParameter("password")
                 .usernameParameter("username")
                 .and()

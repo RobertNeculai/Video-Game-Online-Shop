@@ -17,9 +17,13 @@ public class TemplateController {
         return "shop";
     }
 
-    @GetMapping("register")
-    public String getRegisterView(){
-        return "register";
+    @GetMapping("UserRegister")
+    public String getUserRegisterView(){
+        return "UserRegister";
+    }
+    @GetMapping("CustomerRegister")
+    public String getCustomerRegisterView(){
+        return "CustomerRegister";
     }
 
 
