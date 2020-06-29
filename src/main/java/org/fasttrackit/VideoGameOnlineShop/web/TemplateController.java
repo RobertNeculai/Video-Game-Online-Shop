@@ -12,9 +12,9 @@ public class TemplateController {
     public String getLoginView() {
         return "login";
     }
-    @GetMapping("shop")
-    public String getProducts() {
-        return "shop";
+    @GetMapping("index")
+    public String getIndexPageView() {
+        return "index";
     }
 
     @GetMapping("UserRegister")
@@ -35,5 +35,20 @@ public class TemplateController {
     @GetMapping("single-product")
     public String getSingleProductPageView(){
         return "single-product";
+    }
+
+    @GetMapping("frontPage")
+    public String getFrontPageView(){
+        return "frontPage";
+    }
+
+    @GetMapping("checkout")
+    public String getCheckoutPageView(){
+        return "checkout";
+    }
+
+    @GetMapping("shop")
+    public String getShopPageView(){
+        return "shop";
     }
 }

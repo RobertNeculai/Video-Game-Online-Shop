@@ -4,7 +4,7 @@
 	Twitter: https://twitter.com/freshdesignweb
 	URL: https://www.freshdesignweb.com/ustora/
 -->
-<html lang="en">
+<html lang="en" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -35,7 +35,7 @@
     <![endif]-->
   </head>
   <body>
-   
+  <script sec:authorize="!isAuthenticated()" src="js/loginRedirect.js" ></script>
     <div class="header-area">
         <div class="container">
             <div class="row">
@@ -46,7 +46,12 @@
                             <li><a href="#"><i class="fa fa-heart"></i> Wishlist</a></li>
                             <li><a href="/CartPage"><i class="fa fa-user"></i> My Cart</a></li>
                             <li><a href="/checkout"><i class="fa fa-user"></i> Checkout</a></li>
-                            <li><a href="/login"><i class="fa fa-user"></i> Login</a></li>
+                            <li sec:authorize="!isAuthenticated()" class="fa fa-user">
+                                <a class="btn btn-block-outline-light" href="/login">Login</a>
+                            </li>
+                            <li sec:authorize="isAuthenticated()" class="fa fa-user">
+                                <a class="btn btn-lg btn-primary btn-block" href="/logout">Logout</a>
+                            </li>
                         </ul>
                     </div>
                 </div>
@@ -89,7 +94,7 @@
                 
                 <div class="col-sm-6">
                     <div class="shopping-item">
-                        <a href="cart.html">Cart - <span class="cart-amunt">$100</span> <i class="fa fa-shopping-cart"></i> <span class="product-count">5</span></a>
+                        <a href="/CartPage">Cart - <span class="cart-amunt">$100</span> <i class="fa fa-shopping-cart"></i> <span class="product-count">5</span></a>
                     </div>
                 </div>
             </div>
@@ -109,11 +114,11 @@
                 </div> 
                 <div class="navbar-collapse collapse">
                     <ul class="nav navbar-nav">
-                        <li><a href="index.html">Home</a></li>
-                        <li><a href="shop.html">Shop page</a></li>
-                        <li class="active"><a href="single-product.html">Single product</a></li>
-                        <li><a href="cart.html">Cart</a></li>
-                        <li><a href="checkout.html">Checkout</a></li>
+                        <li><a href="/index">Home</a></li>
+                        <li><a href="/shop">Shop page</a></li>
+                        <li class="active"><a href="/single-product">Single product</a></li>
+                        <li><a href="/CartPage">Cart</a></li>
+                        <li><a href="/checkout">Checkout</a></li>
                         <li><a href="#">Category</a></li>
                         <li><a href="#">Others</a></li>
                         <li><a href="#">Contact</a></li>
@@ -467,5 +472,7 @@
     
     <!-- Main Script -->
     <script src="js/main.js"></script>
+  <script sec:authorize="isAuthenticated()" src="js/DisplayCartTotalPriceAndProductCount.js"></script>
+    <script sec:authorize="isAuthenticated()" src="js/index.js"></script>
   </body>
 </html>

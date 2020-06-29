@@ -33,30 +33,28 @@ public class ApplicationSecurityConfiguration extends WebSecurityConfigurerAdapt
         http
                 .csrf().disable()
                 .authorizeRequests()
-                .antMatchers("/",
-                        "/css/**",
-                        "/fonts/**",
-                        "/images/**",
-                        "/js/**",
-                        "/js/register",
-                        "/js/UserRegister.js")
-                .permitAll()
+                .antMatchers("/UserRegister").permitAll()
+                .antMatchers("/CustomerRegister").permitAll()
+                .antMatchers("/frontPage").permitAll()
+                .antMatchers(
+                        "static/css/**",
+                        "static/fonts/**",
+                        "static/images/**",
+                        "static/js/**").permitAll()
                 .antMatchers(HttpMethod.GET,"/**").permitAll()
                 .antMatchers(HttpMethod.DELETE,"/products").hasAuthority(AuthorityType.ADMIN.name())
                 .antMatchers(HttpMethod.POST,"/products").hasAuthority(AuthorityType.ADMIN.name())
                 .antMatchers(HttpMethod.PUT,"/products").hasAuthority(AuthorityType.ADMIN.name())
                 .antMatchers(HttpMethod.POST,"/user").permitAll()
                 .antMatchers(HttpMethod.POST,"/user/username").permitAll()
-                .antMatchers("/UserRegister").permitAll()
-                .antMatchers("/*").permitAll()
-                .anyRequest()
-                .authenticated()
+                .antMatchers(HttpMethod.POST,"/customers").permitAll()
+                .anyRequest().authenticated()
                 .and()
                 .formLogin()
-                .loginPage("/login")
-                .permitAll()
+                .loginPage("/login").permitAll()
                 .loginProcessingUrl("/login")
-                .defaultSuccessUrl("/shop")
+                .defaultSuccessUrl("/index")
+                .failureForwardUrl("/login")
                 .passwordParameter("password")
                 .usernameParameter("username")
                 .and()
@@ -70,7 +68,10 @@ public class ApplicationSecurityConfiguration extends WebSecurityConfigurerAdapt
                 .clearAuthentication(true)
                 .invalidateHttpSession(true)
                 .deleteCookies("JSESSIONID", "remmeber-me")
-                .logoutSuccessUrl("/login");
+                .logoutSuccessUrl("/login")
+                .and()
+                .exceptionHandling()
+                .accessDeniedPage("/login");
     }
 
     @Override

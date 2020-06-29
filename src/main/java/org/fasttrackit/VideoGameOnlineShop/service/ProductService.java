@@ -92,10 +92,11 @@ public class ProductService {
             }
         }
     }
-    private void priceCalculator(ProductResponse product){
-        if(product.getDiscount().getEndDate() != null)
-            if(LocalDateTime.now().isAfter(product.getDiscount().getEndDate()) && product.getSalesPrice()!=product.getPrice()) {
-                LOGGER.info("Product{} reverting to original price {}",product.getId(),product.getPrice());
+
+    private void priceCalculator(ProductResponse product) {
+        if (product.getDiscount().getEndDate() != null)
+            if (LocalDateTime.now().isAfter(product.getDiscount().getEndDate()) && product.getSalesPrice() != product.getPrice()) {
+                LOGGER.info("Product{} reverting to original price {}", product.getId(), product.getPrice());
                 product.setSalesPrice(product.getPrice());
                 product.getDiscount().setLevel(0);
                 product.getDiscount().setEndDate(null);

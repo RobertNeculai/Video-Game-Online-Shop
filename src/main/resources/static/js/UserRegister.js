@@ -40,7 +40,7 @@ window.Register = {
                     data: JSON.stringify(requestBody),
                     contentType: "application/json"
                 }).done(function (response) {
-                    localStorage.setItem("userId",response.id.toString());
+                    localStorage.setItem("userRegistrationId",response.id.toString());
                     window.location.replace("/CustomerRegister")
                 })
             }
