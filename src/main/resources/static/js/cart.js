@@ -12,7 +12,6 @@ window.Cart = {
     },
     getCustomerID: function () {
         let userId = localStorage.getItem("userId");
-        console.log(userId);
         $.ajax({
             url: Cart.API_URL + "/customers/userid/" + userId,
             method: "GET",

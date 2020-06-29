@@ -11,10 +11,10 @@
     <link href='http://fonts.googleapis.com/css?family=Raleway:400,100' rel='stylesheet' type='text/css'>
 
     <!-- Bootstrap -->
-    <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
+    <link rel="stylesheet"  href="css/bootstrap.min.css">
 
     <!-- Font Awesome -->
-    <link rel="stylesheet" type="text/css" href="css/font-awesome.min.css">
+    <link rel="stylesheet" type=""  href="css/font-awesome.min.css">
 
     <!-- Custom CSS -->
     <link rel="stylesheet"  href="css/owl.carousel.css">
@@ -60,7 +60,6 @@
                 <div class="user-menu">
                     <ul>
                         <li><a href="#"><i class="fa fa-user"></i> My Account</a></li>
-                        <li><a href="#"><i class="fa fa-heart"></i> Wishlist</a></li>
                         <li><a href="/CartPage"><i class="fa fa-user"></i> My Cart</a></li>
                         <li><a href="/checkout"><i class="fa fa-user"></i> Checkout</a></li>
                         <li sec:authorize="!isAuthenticated()" class="fa fa-user">
@@ -139,47 +138,10 @@
     </div>
 </div> <!-- End mainmenu area -->
 
-<div class="slider-area" id="slider">
+<div class="slider-area" >
     <!-- Slider -->
     <div class="block-slider block-slider4">
-        <ul class="" id="bxslider-home4">
-            <li>
-                <img src="img/h4-slide.png" alt="Slide">
-                <div class="caption-group">
-                    <h2 class="caption title">
-                        iPhone <span class="primary">6 <strong>Plus</strong></span>
-                    </h2>
-                    <h4 class="caption subtitle">Dual SIM</h4>
-                    <a class="caption button-radius" href="#"><span class="icon"></span>Shop now</a>
-                </div>
-            </li>
-            <li><img src="img/h4-slide2.png" alt="Slide">
-                <div class="caption-group">
-                    <h2 class="caption title">
-                        by one, get one <span class="primary">50% <strong>off</strong></span>
-                    </h2>
-                    <h4 class="caption subtitle">school supplies & backpacks.*</h4>
-                    <a class="caption button-radius" href="#"><span class="icon"></span>Shop now</a>
-                </div>
-            </li>
-            <li><img src="img/h4-slide3.png" alt="Slide">
-                <div class="caption-group">
-                    <h2 class="caption title">
-                        Apple <span class="primary">Store <strong>Ipod</strong></span>
-                    </h2>
-                    <h4 class="caption subtitle">Select Item</h4>
-                    <a class="caption button-radius" href="#"><span class="icon"></span>Shop now</a>
-                </div>
-            </li>
-            <li><img src="img/h4-slide4.png" alt="Slide">
-                <div class="caption-group">
-                    <h2 class="caption title">
-                        Apple <span class="primary">Store <strong>Ipod</strong></span>
-                    </h2>
-                    <h4 class="caption subtitle">& Phone</h4>
-                    <a class="caption button-radius" href="#"><span class="icon"></span>Shop now</a>
-                </div>
-            </li>
+        <ul class="" id="slider">
         </ul>
     </div>
     <!-- ./Slider -->
@@ -499,31 +461,6 @@
     <div class="zigzag-bottom"></div>
     <div class="container">
         <div class="row">
-            <div class="col-md-3 col-sm-6">
-                <div class="footer-about-us">
-                    <h2>u<span>Stora</span></h2>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Perferendis sunt id doloribus vero quam laborum quas alias dolores blanditiis iusto consequatur, modi aliquid eveniet eligendi iure eaque ipsam iste, pariatur omnis sint! Suscipit, debitis, quisquam. Laborum commodi veritatis magni at?</p>
-                    <div class="footer-social">
-                        <a href="#" target="_blank"><i class="fa fa-facebook"></i></a>
-                        <a href="#" target="_blank"><i class="fa fa-twitter"></i></a>
-                        <a href="#" target="_blank"><i class="fa fa-youtube"></i></a>
-                        <a href="#" target="_blank"><i class="fa fa-linkedin"></i></a>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-md-3 col-sm-6">
-                <div class="footer-menu">
-                    <h2 class="footer-wid-title">User Navigation </h2>
-                    <ul>
-                        <li><a href="#">My account</a></li>
-                        <li><a href="#">Order history</a></li>
-                        <li><a href="#">Wishlist</a></li>
-                        <li><a href="#">Vendor contact</a></li>
-                        <li><a href="#">Front page</a></li>
-                    </ul>
-                </div>
-            </div>
 
             <div class="col-md-3 col-sm-6">
                 <div class="footer-menu">
@@ -544,7 +481,9 @@
                     <p>Sign up to our newsletter and get exclusive deals you wont find anywhere else straight to your inbox!</p>
                     <div class="newsletter-form">
                         <form action="#">
-                            <input type="email" placeholder="Type your email">
+                            <label>
+                                <input type="email" placeholder="Type your email">
+                            </label>
                             <input type="submit" value="Subscribe">
                         </form>
                     </div>

@@ -13,7 +13,8 @@ window.ProductSlider = {
     displayProducts: function (products) {
         let productsHtml = '';
         products.forEach(product => productsHtml += ProductSlider.displayProductsOnSlider(product));
-        $('#bxslider-home4').html(productsHtml);
+        $('#slider').html(productsHtml);
+        $('#slider').bxSlider();
     },
     displayProductsOnSlider: function (product) {
 
@@ -26,7 +27,8 @@ window.ProductSlider = {
                     <h4 class="caption subtitle">Dual SIM</h4>
                     <a class="caption button-radius" href="#"><span class="icon"></span>Shop now</a>
                 </div>
-                </li>`
+</li>`
+
 
     },
     getLastestProducts: function () {

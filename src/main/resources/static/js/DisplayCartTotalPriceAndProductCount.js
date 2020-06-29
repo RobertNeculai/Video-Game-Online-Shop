@@ -34,7 +34,7 @@ window.DisplayCartAll={
     displayCartTotalandNumberofProducts:function(TotalPrice,ProductCount){
 
         return `<div class="shopping-item">
-                        <a href="/CartPage">My Cart - <span class="cart-amunt">${TotalPrice}</span> <i class="fa fa-shopping-cart"></i> <span class="product-count">${ProductCount}</span></a>
+                        <a href="/CartPage">My Cart - <span class="cart-amunt">$ ${TotalPrice}</span> <i class="fa fa-shopping-cart"></i> <span class="product-count">${ProductCount}</span></a>
                     </div>`
     }
 }

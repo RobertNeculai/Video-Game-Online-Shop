@@ -38,6 +38,7 @@ public class ApplicationSecurityConfiguration extends WebSecurityConfigurerAdapt
                 .antMatchers("/frontPage").permitAll()
                 .antMatchers(
                         "static/css/**",
+                        "static/css/font-awesome.min.css",
                         "static/fonts/**",
                         "static/images/**",
                         "static/js/**").permitAll()

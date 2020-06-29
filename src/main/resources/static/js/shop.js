@@ -54,6 +54,7 @@ window.shop = {
                         <p>
                         </p>
                         <label>Description: ${product.description}</label>
+                       <div class="fa-star" style="color: orange;" 
                         <div class="product-carousel-price">
                             <ins>Price: $${product.salesPrice}</ins> <del></del>
                         </div>  
