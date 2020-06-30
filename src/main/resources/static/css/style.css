@@ -239,8 +239,9 @@ body { font-family:Arial, Helvetica, sans-serif; }
 }
 .block-slider .caption-group{
     position: absolute;
-    top: 26%;
-    right: 16%;
+    top: 80%;
+    right: 1%;
+    color:white;
 }
 .block-slider .caption-group .title{
     margin: 0;

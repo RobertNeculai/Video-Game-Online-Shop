@@ -23,7 +23,7 @@ window.OrderCheckout={
     },
     displayCartContent: function (products) {
         let htmlContent = "";
-        let htmlPriceContent = "";
+        let htmlPriceContent;
         let TotalPrice = 0;
         products.forEach(product => TotalPrice += product.price * product.quantity);
         products.forEach(product => htmlContent += OrderCheckout.getHtmlForOneProduct(product));

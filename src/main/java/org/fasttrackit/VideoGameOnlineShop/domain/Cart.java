@@ -32,7 +32,7 @@ public class Cart {
         if (productNotPresent) {
             CartProducts cartProducts = new CartProducts(this, product);
             cartProducts.setQuantity(1);
-            cartProducts.setPrice(product.getPrice());
+            cartProducts.setPrice(product.getSalesPrice());
             products.add(cartProducts);
         }
     }
@@ -42,6 +42,10 @@ public class Cart {
 
         for (CartProducts cartProducts : products) {
             if (cartProducts.getCart().equals(this) && cartProducts.getProduct().equals(product)) {
+                if(cartProducts.getPrice()>price)
+                {
+                    cartProducts.setPrice(price);
+                }
                 cartProducts.setQuantity(cartProducts.getQuantity() + quantity);
                 productNotPresent = false;
                 break;

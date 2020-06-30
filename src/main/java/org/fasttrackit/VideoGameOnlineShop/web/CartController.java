@@ -33,7 +33,7 @@ public class CartController {
         cartService.addProductsToCart(request);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
-    @PutMapping("/SingleProductAddition {id}")
+    @PutMapping("/{id}")
     public ResponseEntity<Void> addProductToCart(@PathVariable("id") long customerId,@Valid @RequestBody AddProductToCartRequest request) {
         request.setCustomerId(customerId);
         cartService.addProductToCart(request);

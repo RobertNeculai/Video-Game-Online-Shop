@@ -3,6 +3,7 @@ import org.fasttrackit.VideoGameOnlineShop.domain.User;
 import org.fasttrackit.VideoGameOnlineShop.exception.ResourceNotFoundException;
 import org.fasttrackit.VideoGameOnlineShop.persistance.UserRepository;
 import org.fasttrackit.VideoGameOnlineShop.transfer.user.SaveUserRequest;
+import org.fasttrackit.VideoGameOnlineShop.transfer.user.UpdateUserRequest;
 import org.fasttrackit.VideoGameOnlineShop.transfer.user.UserResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -10,6 +11,7 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -38,11 +40,11 @@ public class UserService {
         user.setPassword(passwordEncoder.encode(request.getPassword()));
         return userRepository.save(user);
     }
-    public User updateUser(String username, SaveUserRequest request) {
+    public User updateUser(String username, UpdateUserRequest request) {
         LOGGER.info("Updating User {}: {}", username, request);
         User user = userRepository.findByUsername(username)
                 .orElseThrow(() -> new UsernameNotFoundException(String.format("Username %s not found", username)));
-        BeanUtils.copyProperties(request, user);
+       user.setPassword(passwordEncoder.encode(request.getPassword()));
         return userRepository.save(user);
     }
 

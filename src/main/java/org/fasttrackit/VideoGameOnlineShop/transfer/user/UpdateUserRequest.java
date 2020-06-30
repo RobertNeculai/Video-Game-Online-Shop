@@ -1,25 +1,14 @@
 package org.fasttrackit.VideoGameOnlineShop.transfer.user;
+
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import java.util.StringJoiner;
 
-public class SaveUserRequest {
+public class UpdateUserRequest {
 
-    @NotEmpty
-    @NotNull
-    private String username;
     @NotEmpty
     @NotNull
     private String password;
-
-
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
-    }
 
     public String getPassword() {
         return password;
@@ -32,7 +21,6 @@ public class SaveUserRequest {
     @Override
     public String toString() {
         return new StringJoiner(", ", org.fasttrackit.VideoGameOnlineShop.domain.User.class.getSimpleName() + "[", "]")
-                .add("username='" + username + "'")
                 .add("password='" + password + "'")
                 .toString();
     }

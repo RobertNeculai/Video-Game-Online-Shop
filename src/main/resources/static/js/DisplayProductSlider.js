@@ -14,18 +14,19 @@ window.ProductSlider = {
         let productsHtml = '';
         products.forEach(product => productsHtml += ProductSlider.displayProductsOnSlider(product));
         $('#slider').html(productsHtml);
+
         $('#slider').bxSlider();
     },
     displayProductsOnSlider: function (product) {
-
         return `<li>
                 <img src=${product.imageUrl}  alt="Slide">
                 <div class="caption-group">
                     <h2 class="caption title">
                         ${product.name} <span class="primary">${product.genre}</span>
                     </h2>
-                    <h4 class="caption subtitle">Dual SIM</h4>
-                    <a class="caption button-radius" href="#"><span class="icon"></span>Shop now</a>
+                    <h4 class="price">Just $${product.salesPrice}</h4>
+                    <button class="add_to_cart_button" rel="nofollow"  id="button1" onclick="navigateToSingleProduct(${product.id});"
+                   ><span class="icon"></span>Shop now</button>
                 </div>
 </li>`
 
@@ -50,12 +51,10 @@ window.ProductSlider = {
                             <div class="product-f-image">
                                 <img src=${product.imageUrl} width="1100px" height="950px" alt="">
                                 <div class="product-hover">
-                                    <a href="#" class="add-to-cart-link"><i class="fa fa-shopping-cart"></i> Add to cart</a>
-                                    <a href="single-product.html" class="view-details-link"><i class="fa fa-link"></i> See details</a>
                                 </div>
                             </div>
 
-                            <h2><a href="single-product.html">${product.name}</a>
+                            <h2><a href="" class="product" data-id=${product.id}>${product.name}</a>
                             <div>Genre: ${product.genre}</div>
           
 
@@ -70,3 +69,4 @@ window.ProductSlider = {
 
 ProductSlider.getProducts();
 ProductSlider.getLastestProducts();
+

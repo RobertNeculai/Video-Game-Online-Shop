@@ -6,6 +6,8 @@ import org.fasttrackit.VideoGameOnlineShop.domain.User;
 import org.fasttrackit.VideoGameOnlineShop.exception.ResourceNotFoundException;
 import org.fasttrackit.VideoGameOnlineShop.persistance.CustomerRepository;
 import org.fasttrackit.VideoGameOnlineShop.transfer.customer.SaveCustomerRequest;
+import org.fasttrackit.VideoGameOnlineShop.transfer.customer.UpdateCustomerRequest;
+import org.fasttrackit.VideoGameOnlineShop.transfer.user.UpdateUserRequest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
@@ -19,13 +21,11 @@ public class CustomerService  {
 
     private final CustomerRepository customerRepository;
     private final UserService userService;
-    private final ObjectMapper objectMapper;
 
     @Autowired
     public CustomerService(CustomerRepository customerRepository, UserService userService, ObjectMapper objectMapper) {
         this.customerRepository = customerRepository;
         this.userService = userService;
-        this.objectMapper = objectMapper;
     }
 
     public Customer createCustomer(SaveCustomerRequest request) {
@@ -52,11 +52,11 @@ public class CustomerService  {
                 .orElseThrow(()->new ResourceNotFoundException(String.format("Customer with UserID {} not found",id)));
     }
 
-    //
-    public Customer updateCustomer(long id, SaveCustomerRequest request) {
+    public Customer updateCustomer(long id, UpdateCustomerRequest request) {
         LOGGER.info("Updating Customer {}: {}", id, request);
         Customer customer = getCustomer(id);
-        BeanUtils.copyProperties(request, customer);
+        customer.setEmail(request.getEmail());
+        customer.setAddress(request.getAddress());
         return customerRepository.save(customer);
     }
 

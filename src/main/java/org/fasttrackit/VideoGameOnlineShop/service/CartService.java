@@ -36,12 +36,11 @@ public class CartService {
 
     private void priceChecker(ProductInCartResponse productInCartResponse) {
         Product product=productService.findProduct(productInCartResponse.getId());
-        if (product.getDiscount().getEndDate() != null && productInCartResponse.getPrice()!=product.getPrice())
+        if (product.getDiscount().getEndDate() != null && productInCartResponse.getPrice()!=product.getSalesPrice())
             if (LocalDateTime.now().isAfter(product.getDiscount().getEndDate())) {
-                LOGGER.info("Product{} reverting to original price {}", product.getId(), product.getPrice());
-                productInCartResponse.setPrice(product.getPrice());
+                LOGGER.info("Product{} reverting to original price {}", product.getId(), product.getSalesPrice());
+                productInCartResponse.setPrice(product.getSalesPrice());
             }
-
     }
 
     @Transactional

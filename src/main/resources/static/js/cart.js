@@ -17,6 +17,7 @@ window.Cart = {
             method: "GET",
             contentType: "application/json"
         }).done(function (response) {
+            localStorage.setItem("cusID",response.id);
             Cart.getCartContent(response.id)
 
         })
@@ -43,9 +44,9 @@ window.Cart = {
                       
                 <td class="product-quantity">
                     <div class="quantity buttons_added">
-                        <input type="button" class="minus" value="-">
+                        <input type="button" class="minus" value="-" onclick="remove(${localStorage.getItem("cusID")},${product.id})">
                         <input type="number" size="4" class="input-text qty text" title="Qty" value="${product.quantity}" min="0" step="1">
-                        <input type="button" class="plus" value="+">
+                        <input type="button" class="plus" value="+" onclick="add(${localStorage.getItem("cusID")},${product.id})">
                     </div>
                     <td class="product-price">
                     <span class="amount">$ ${pricePerType}</span> 

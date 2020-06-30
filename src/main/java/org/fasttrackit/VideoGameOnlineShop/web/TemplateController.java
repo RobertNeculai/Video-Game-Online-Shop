@@ -51,4 +51,9 @@ public class TemplateController {
     public String getShopPageView(){
         return "shop";
     }
+
+    @GetMapping("MyAccount")
+    public String getMyAccountPageView(){
+        return "MyAccountPage";
+    }
 }

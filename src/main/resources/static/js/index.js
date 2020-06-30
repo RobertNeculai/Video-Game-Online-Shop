@@ -24,8 +24,11 @@ window.index = {
 
     displayUserName: function (user) {
         localStorage.setItem("userId",user.id);
-        return `<li  class="fa fa-user" data-user-id=${user.id}>${user.username}</></li>`
-    }
+        return `<li  class="fa fa-user" style="color: black" data-user-id=${user.id}>${user.username}</li>`
+    },
+    test:function () {
+        console.log(123);
 
+    }
 };
 index.getUserSession();

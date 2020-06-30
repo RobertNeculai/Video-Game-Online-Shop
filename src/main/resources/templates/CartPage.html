@@ -3,7 +3,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Cart Page - Ustora Demo</title>
+    <title>Cart Page </title>
 
     <!-- Google Fonts -->
     <link href='http://fonts.googleapis.com/css?family=Titillium+Web:400,200,300,700,600' rel='stylesheet'
@@ -37,13 +37,13 @@
             <div class="col-md-8">
                 <div class="user-menu">
                     <ul>
-                        <li><a href="#"><i class="fa fa-user"></i> My Account</a></li>
+                        <li><a href="/MyAccount"><i class="fa fa-user"></i> My Account</a></li>
                         <li><a href="/checkout"><i class="fa fa-user"></i> Checkout</a></li>
                         <li sec:authorize="!isAuthenticated()" class="fa fa-user">
                             <a class="btn btn-block-outline-light" href="/login">Login</a>
                         </li>
                         <li sec:authorize="isAuthenticated()" class="fa fa-user">
-                            <a class="btn btn-lg btn-primary btn-block" href="/logout">Logout</a>
+                            <a class="btn btn-lg btn-primary btn-block" style="color:black;" href="/logout">Logout</a>
                         </li>
                     </ul>
                 </div>
@@ -58,8 +58,7 @@
                                     class="caret"></b></a>
                             <ul class="dropdown-menu">
                                 <li><a href="#">USD</a></li>
-                                <li><a href="#">INR</a></li>
-                                <li><a href="#">GBP</a></li>
+
                             </ul>
                         </li>
 
@@ -69,8 +68,7 @@
                                     class="caret"></b></a>
                             <ul class="dropdown-menu">
                                 <li><a href="#">English</a></li>
-                                <li><a href="#">French</a></li>
-                                <li><a href="#">German</a></li>
+
                             </ul>
                         </li>
                     </ul>
@@ -107,12 +105,8 @@
                 <ul class="nav navbar-nav">
                     <li><a href="/index">Home</a></li>
                     <li><a href="/shop">Shop page</a></li>
-                    <li><a href="/single-product">Single product</a></li>
                     <li class="active"><a href="/CartPage">Cart</a></li>
                     <li><a href="/checkout">Checkout</a></li>
-                    <li><a href="#">Category</a></li>
-                    <li><a href="#">Others</a></li>
-                    <li><a href="#">Contact</a></li>
                 </ul>
             </div>
         </div>
@@ -364,5 +358,6 @@
 
         <script sec:authorize="isAuthenticated()" src="js/index.js"></script>
         <script src="js/cart.js"></script>
+        <script src="js/CartButtons.js"></script>
 </body>
 </html>

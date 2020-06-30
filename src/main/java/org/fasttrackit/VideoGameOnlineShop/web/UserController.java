@@ -3,6 +3,7 @@ package org.fasttrackit.VideoGameOnlineShop.web;
 import org.fasttrackit.VideoGameOnlineShop.domain.User;
 import org.fasttrackit.VideoGameOnlineShop.service.UserService;
 import org.fasttrackit.VideoGameOnlineShop.transfer.user.SaveUserRequest;
+import org.fasttrackit.VideoGameOnlineShop.transfer.user.UpdateUserRequest;
 import org.fasttrackit.VideoGameOnlineShop.transfer.user.UserResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -53,7 +54,7 @@ public class UserController {
     }
 
     @PutMapping("/{username}")
-    public ResponseEntity<User> updateCustomer(@PathVariable String username, @RequestBody SaveUserRequest request) {
+    public ResponseEntity<User> updateCustomer(@PathVariable String username, @RequestBody UpdateUserRequest request) {
         User user = userService.updateUser(username, request);
         return new ResponseEntity<>(user, HttpStatus.OK);
     }

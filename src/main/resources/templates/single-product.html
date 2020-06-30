@@ -1,15 +1,10 @@
 <!DOCTYPE html>
-<!--
-	ustora by freshdesignweb.com
-	Twitter: https://twitter.com/freshdesignweb
-	URL: https://www.freshdesignweb.com/ustora/
--->
 <html lang="en" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Product Page - Ustora Demo</title>
+    <title>Single Product Page </title>
     
     <!-- Google Fonts -->
     <link href='http://fonts.googleapis.com/css?family=Titillium+Web:400,200,300,700,600' rel='stylesheet' type='text/css'>
@@ -42,15 +37,14 @@
                 <div class="col-md-8">
                     <div class="user-menu">
                         <ul>
-                            <li><a href="#"><i class="fa fa-user"></i> My Account</a></li>
-                            <li><a href="#"><i class="fa fa-heart"></i> Wishlist</a></li>
+                            <li><a href="/MyAccount"><i class="fa fa-user"></i> My Account</a></li>
                             <li><a href="/CartPage"><i class="fa fa-user"></i> My Cart</a></li>
                             <li><a href="/checkout"><i class="fa fa-user"></i> Checkout</a></li>
                             <li sec:authorize="!isAuthenticated()" class="fa fa-user">
                                 <a class="btn btn-block-outline-light" href="/login">Login</a>
                             </li>
                             <li sec:authorize="isAuthenticated()" class="fa fa-user">
-                                <a class="btn btn-lg btn-primary btn-block" href="/logout">Logout</a>
+                                <a class="btn btn-lg btn-primary btn-block" style="color:black;" href="/logout">Logout</a>
                             </li>
                         </ul>
                     </div>
@@ -88,7 +82,7 @@
             <div class="row">
                 <div class="col-sm-6">
                     <div class="logo">
-                        <h1><a href="./"><img src="img/logo.png"></a></h1>
+                        <h1><a href="./"><img src="img/logo.png" alt=""></a></h1>
                     </div>
                 </div>
                 
@@ -116,7 +110,6 @@
                     <ul class="nav navbar-nav">
                         <li><a href="/index">Home</a></li>
                         <li><a href="/shop">Shop page</a></li>
-                        <li class="active"><a href="/single-product">Single product</a></li>
                         <li><a href="/CartPage">Cart</a></li>
                         <li><a href="/checkout">Checkout</a></li>
                         <li><a href="#">Category</a></li>
@@ -149,7 +142,9 @@
                     <div class="single-sidebar">
                         <h2 class="sidebar-title">Search Products</h2>
                         <form action="">
-                            <input type="text" placeholder="Search products...">
+                            <label>
+                                <input type="text" placeholder="Search products...">
+                            </label>
                             <input type="submit" value="Search">
                         </form>
                     </div>
@@ -201,7 +196,7 @@
                 <div class="col-md-8">
                     <div class="product-content-right">
                         <div class="product-breadcroumb">
-                            <a href="">Home</a>
+                            <a href="/index">Home</a>
                             <a href="">Category Name</a>
                             <a href="">Sony Smart TV - 2015</a>
                         </div>
@@ -247,15 +242,10 @@
                                         <div class="tab-content">
                                             <div role="tabpanel" class="tab-pane fade in active" id="home">
                                                 <h2>Product Description</h2>  
-                                                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam tristique, diam in consequat iaculis, est purus iaculis mauris, imperdiet facilisis ante ligula at nulla. Quisque volutpat nulla risus, id maximus ex aliquet ut. Suspendisse potenti. Nulla varius lectus id turpis dignissim porta. Quisque magna arcu, blandit quis felis vehicula, feugiat gravida diam. Nullam nec turpis ligula. Aliquam quis blandit elit, ac sodales nisl. Aliquam eget dolor eget elit malesuada aliquet. In varius lorem lorem, semper bibendum lectus lobortis ac.</p>
-
-                                                <p>Mauris placerat vitae lorem gravida viverra. Mauris in fringilla ex. Nulla facilisi. Etiam scelerisque tincidunt quam facilisis lobortis. In malesuada pulvinar neque a consectetur. Nunc aliquam gravida purus, non malesuada sem accumsan in. Morbi vel sodales libero.</p>
                                             </div>
                                             <div role="tabpanel" class="tab-pane fade" id="profile">
                                                 <h2>Reviews</h2>
                                                 <div class="submit-review">
-                                                    <p><label for="name">Name</label> <input name="name" type="text"></p>
-                                                    <p><label for="email">Email</label> <input name="email" type="email"></p>
                                                     <div class="rating-chooser">
                                                         <p>Your rating</p>
 
@@ -267,7 +257,7 @@
                                                             <i class="fa fa-star"></i>
                                                         </div>
                                                     </div>
-                                                    <p><label for="review">Your review</label> <textarea name="review" id="" cols="30" rows="10"></textarea></p>
+                                                    <p><label>Your review</label> <label for=""></label><textarea name="review" id="" cols="30" rows="10"></textarea></p>
                                                     <p><input type="submit" value="Submit"></p>
                                                 </div>
                                             </div>
@@ -402,7 +392,9 @@
                         <h2 class="footer-wid-title">Newsletter</h2>
                         <p>Sign up to our newsletter and get exclusive deals you wont find anywhere else straight to your inbox!</p>
                         <div class="newsletter-form">
-                            <input type="email" placeholder="Type your email">
+                            <label>
+                                <input type="email" placeholder="Type your email">
+                            </label>
                             <input type="submit" value="Subscribe">
                         </div>
                     </div>
@@ -448,5 +440,7 @@
     <script src="js/main.js"></script>
   <script sec:authorize="isAuthenticated()" src="js/DisplayCartTotalPriceAndProductCount.js"></script>
     <script sec:authorize="isAuthenticated()" src="js/index.js"></script>
+  <script src="js/single-product.js"></script>
+  <script src="js/review.js"></script>
   </body>
 </html>
