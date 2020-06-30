@@ -55,7 +55,7 @@ window.MyAccount = {
                                             </p>
                                             <div class="clear"></div>
                                             <label for="Date-of-Birth" readonly="readonly" class="sr-only">Date of Birth</label>
-                                            <input type="date" id="Date-of-Birth" value="${customer.dob}" name="Date-of-Birth" class="form-control" placeholder="Date-of-Birth"  autofocus="">
+                                            <input type="date" id="Date-of-Birth" readonly="readonly" value="${customer.dob}" name="Date-of-Birth" class="form-control" placeholder="Date-of-Birth"  autofocus="">
 `
 
     },
