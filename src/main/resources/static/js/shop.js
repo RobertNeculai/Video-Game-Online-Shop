@@ -55,7 +55,7 @@ window.shop = {
                         <p>
                         </p>
                         <label>Description: ${product.description}</label>
-                       <div>Rating: ${product.averageRating}/10</div> 
+                       <div>Rating: ${product.averageRating}/5</div> 
                         <div class="product-carousel-price">
                             <ins>Price: $${product.salesPrice}</ins> <del></del>
                         </div>  

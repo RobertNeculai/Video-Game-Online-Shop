@@ -33,7 +33,7 @@ window.singleProduct= {
                                 <div class="product-images">
                                     <div class="product-main-img">
                                         <img src="${product.imageUrl}" alt="">
-                                        <a>Rating: ${product.averageRating}/10</a>
+                                        <a>Rating: ${product.averageRating}/5</a>
                                     </div>
                                 </div>
                             </div>
@@ -69,18 +69,16 @@ window.singleProduct= {
                                             </div>
                                                 <div class="submit-review">
                                                     <div class="rating-chooser">
-                                                        <p>Your rating</p>
+                                               
 
                                                         <div class="rating-wrap-post">
-                                                            <i class="fa fa-star"></i>
-                                                            <i class="fa fa-star"></i>
-                                                            <i class="fa fa-star"></i>
-                                                            <i class="fa fa-star"></i>
-                                                            <i class="fa fa-star"></i>
+                                                          
+                                                            <label for="Content">Rate this product</label>
+                                                            <input type="number" placeholder="Your Rating for this Product" id="Rating" min="0" max="5"  >
                                                         </div>
                                                     </div>
-                                                    <p><label for="review">Your review</label> <textarea name="review" id="" cols="30" rows="10"></textarea></p>
-                                                    <p><input type="submit" value="Submit"></p>
+                                                    <p><label for="review">Your review</label> <textarea name="review" id="Content" cols="30" rows="10"></textarea></p>
+                                                    <p><input type="submit" value="Submit" id="reviewButton" onclick="submitReview(${product.id},$('#Content').val(),$('#Rating').val())"></p>
                                                 </div>
                                             </div>
                                         </div>

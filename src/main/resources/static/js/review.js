@@ -22,6 +22,6 @@ window.Review={
 <div class="clear" ></div>
 <div class="help-block" <p></p><label for="review" >${review.content}</label> <p>
                                                     Rating: ${review.rating}/5</p> </div>`
-},
+}
 };
 Review.getReviews();
